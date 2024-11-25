@@ -52,7 +52,7 @@
 	\subsection{Distribution of Average Game Times}
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=0.8\textwidth]{../BoxPlots}
+			\includegraphics[width=0.8\textwidth]{BoxPlots}
 			\caption{Distribution of Average Game Times Grouped by $N_{S}$ and $N_{L}$}
 			\label{fig:boxplots}
 		\end{figure}
@@ -60,21 +60,21 @@
 	The box plot (fig 1.1) shows the distribution of average game times across various combinations of $N_{s}$ and $N_{L}$. The game configurations that show an extreme difference in the number of snakes and ladders (e.g., $N_{s} = 10$ and $N_{L} = 5$) show the highest variability in average game time. This can be observed through the wider interquartile ranges and more frequent outliers. A key feature is that configurations with fewer ladders tend to have longer game times. For instance, configurations with 10 snakes and 5 ladders frequently have average game times above 33, with a few extreme outliers nearing 37. The average game time tends to decrease as the number of ladders increases. This is intuitive, as ladders facilitate faster movement towards the goal state, reducing the number of turns required to reach the end of the game. For example, configurations with 10 snakes and 9 or 10 ladders have noticeably lower average game times than those with only 5 ladders. The whiskers for these configurations often do not extend beyond 30, suggesting a tighter and more consistent game time with fewer outliers. The plot concludes that outliers are frequent in configurations with more snakes and fewer ladders. This indicates that while these setups generally lead to longer game times, there are instances where luck allows a faster completion. These outliers could represent cases where a player avoided all major snakes, resulting in an unusually short game.
 	
 	\subsection{Trend in Average Game Times for Different Configurations}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=0.8\linewidth]{../Combined_Trends}
-			\caption{Trend in Average Game Times for Different Configurations}
-			\label{fig:TrendLine}
-		\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\linewidth]{BoxPlots}
+		\caption{Trend in Average Game Times for Different Configurations}
+		\label{fig:boxplots}
+	\end{figure}
 	The line graph (fig 1.2) helps to track trends in average game times across different boards for each configuration of snakes and ladders. This visually compares game performance for each combination as the board layout also changes for each configuration of the parameters. One of the most apparent observations from the trend analysis is that there is a lack of a clear dominant configuration. Although certain combinations appear to result in consistently higher or lower game times, the lines frequently cross each other, indicating that no single combination guarantees the fastest or slowest game across all boards. The line chart shows that the configurations with fewer snakes ($N_{s} = 5, 6$) tend to produce more stable game times, regardless of the number of ladders. These configurations generally have fewer extreme spikes and dips in average game time, as indicated by smoother lines on the graph, i.e. due to the reduction in the risk profile of the board layout, the player’s game time becomes more consistent from run to run. For configurations with higher snake counts ($N_{s} >= 9$), there are noticeable spikes in average game time for certain boards. These spikes suggest that the placement of snakes on specific boards creates significant delays, likely due to frequent encounters with snakes that force players back to multiple spaces. The impact of ladders in these cases is reduced, as the advantage gained from a ladder can be undone by a snake in later turns. Configurations with 9 or 10 ladders generally exhibit less fluctuation across boards. While they may not always have the shortest game times, they provide more consistent results, reducing extreme outliers and spikes. This measure also counters the effect of high counts of snakes, generally stabilising the game mechanics.
 	
 	\subsection{Interaction Between the Number of Snakes and Ladders}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=0.8\linewidth]{../Heatmap}
-			\caption{Heatmap of Average Game Times}
-			\label{fig:Heatmap}
-		\end{figure} 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Heatmap}
+	\caption{Heatmap of Average Game Times}
+	\label{fig:heatmap}
+\end{figure}
 	The heatmap (fig 1.3) visually overviews the interaction between $N_{S}$ and $N_{L}$ on average game time. Colours range from dark shades (indicating shorter game times) to bright shades (indicating longer game times). A clear pattern emerges from the heatmap, that suggests: as the number of ladders increases, the average game time decreases. This trend is most noticeable for higher snake counts ($N_{S} >= 9$), where additional ladders significantly reduce game times. The bottom-right corner of the heatmap ($N_{S} >= 9, N_{L} = 10$) shows the shortest game times, reinforcing the idea that ladders mitigate the delays caused by snakes. The effect of snakes on game time is not quite linear. For example, increasing the number of snakes from 5 to 6 does not dramatically change the game time. However, when the number of snakes is increased to 9 or 10, the game times rise substantially. This suggests a threshold beyond which additional snakes greatly increase the likelihood of players landing on them, thereby extending game time by a significant margin. This indicates that while snakes introduce challenges, their impact can be mitigated by providing players ample ladders to climb back up.
 	
 	\section{Conclusion}

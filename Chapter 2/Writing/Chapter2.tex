@@ -1,0 +1,57 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{soul} 
+\usepackage{apacite}
+\usepackage{graphicx}
+\usepackage{xurl}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\lhead{Research Project}
+\rhead{Draft Chapter 2}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\title{Alternate Review Systems:\\ Quantifying Enjoyability in Table-top Games}
+\author{Jai Bakshi \\ 21060322069}
+\date{September 2024}
+
+\begin{document}
+	\maketitle
+	\setcounter{chapter}{1}
+	\chapter{Effects of Entity Lengths on Game Time}
+	This chapter will continue the investigation of the effects of changing various parameters of the classic game of snakes and ladders, aiming to quantify the impact of various game parameters on the overall game dynamics. In this chapter, the research aims to achieve this by simulating numerous games of while systematically varying the lengths of snakes and ladders while keeping the quantities of snakes and ladders on the board as constant values. Much like the previous chapter, in order to make conclusive claims based on the computation and results, the model limits changes in parameters to only affect one category of entities on the board, i.e. the lengths of snakes and ladders. This allows the research to systematically examine how changes in these parameters affect the distribution of game duration - specifically, the number of moves needed to reach the end state.
+	\section{Setting up the board}
+	The game board is modeled as a 100-tiled grid, with there being three entities on each board:
+	\begin{enumerate}
+		\item Agent: The Agent represents the player, the Agent's movement is determined by a fair six-sided dice roll. 
+		\item Snake: These entities have two terminal ends, the head and the tail. When the player lands on the head of the snake, they move to the tile at the snake's tail.
+		\item Ladder: Similar to snakes, ladders have two ends. When the player lands on the base of the ladder, they climb to the tile at the ladder's top.
+	\end{enumerate}
+
+	The nature of these entities is determined by the following controllable parameters:
+	\begin{enumerate}
+		\item Board Size ($BoardSize$): The maximum size of the board in terms of the number of tiles.
+		\item Number of Snakes ($N_{s}$): The total quantity of snakes on the board.
+		\item Number of Ladders ($N_{l}$): The total quantity of ladders on the board.
+		\item Length of Snakes ($L^{i}_{s}$): This parameter determines the length of the $i^{th}$ snake on the board for $i=1,2,... N_{s}$. It dictates how far down a player moves when landing on a snake's head.
+		\item Length of Ladders ($L^{i}_{l}$): This parameter determines the length of $i^{th}$ ladder on the board for $i=1,2,... N_{l}$. It dictates how far up a player climbs when encountering a ladder's base.
+		\item Ladder Position ($Ladder^{i}_{start/end}$): The position of the $i^{th}$ ladder's terminal ends.
+		\item Snake Position ($Snake^{i}_{start/end}$): The position of the $i^{th}$ snake's terminal ends.
+	\end{enumerate}
+	
+	To ensure that the board configuration remains valid and doesn't present any conflicts such as - positioning snakes or ladders at invalid tiles where they might go out of the bounds of the board, certain constraints are implemented:
+	
+	\begin{enumerate}
+		\item Ladder Constraint: Ladders cannot begin within the $L^{i}_{l}$ tiles of the board to prevent them from extending beyond the game's end. The ladder's starting position therefore becomes:  $$Ladder^{i}_{start} \leq BoardSize - L_{l}$$
+		\item Snake Constraint: Snakes cannot begin within the first $L^{i}_{s}$ tiles to avoid their tails going below the starting position. The snake's end therefore becomes: $$Snake^{i}_{start}\geq 1 + L_{s}$$
+		\item Overlap Constraint: To maintain game integrity, the endpoints of snakes and ladders cannot coincide. If an overlap occurs, the simulation setup randomly decides whether to remove the overlapping snake or ladder based on a probability of 0.5.
+	\end{enumerate}
+	
+	
+\end{document}
+	
