@@ -8,3 +8,6 @@
 !*.py
 !*.png
 !*.pdf
+
+# Allow folders
+!*/
