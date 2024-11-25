@@ -87,6 +87,15 @@ def simulate_random_points(num_boards, num_simulations, num_snakes, num_ladders)
     plt.tight_layout()
     plt.savefig("approach_3_random_points.png")
     
+        # Plot frequency distribution of game times for the last board
+    plt.figure(figsize=(10, 6))
+    sns.histplot(game_times, bins=30, kde=True, color='blue')
+    plt.title("Frequency Distribution of Game Times for the Last Board")
+    plt.xlabel("Game Time (Moves)")
+    plt.ylabel("Frequency")
+    plt.tight_layout()
+    plt.savefig("approach_3_game_time_distribution.png")
+    
 if __name__ == "__main__":
     num_boards = 10
     num_simulations = 1000

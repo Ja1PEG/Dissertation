@@ -6,6 +6,8 @@
 \usepackage{apacite}
 \usepackage{graphicx}
 \usepackage{xurl}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -54,14 +56,16 @@
 		\item Overlap Constraint: To maintain game integrity, the endpoints of snakes and ladders cannot coincide. If an overlap occurs, the simulation setup randomly decides whether to remove the overlapping snake or ladder based on a probability of 0.5.
 	\end{enumerate}
 	
-	\section{Approaches to Assign Lengths of Snakes and Ladders}
+	\section{Approaches to assign $L_s$ and $L_l$}
 	For this chapter, three distinct approaches are deployed to assign the lengths of snakes and ladders on the game board. Each approach allows for unique characteristics of the board configuration to facilitate a comparative analysis of game time under varying assumptions. These are as follows:
 	\begin{enumerate}
-		\item Fixed unequal lengths: This approach involves assigning fixed but unequal lengths to all snakes and ladders, i.e. $L^i_s \neq  L^i_l$ \space $ \forall i \in [1, N]$ and all $L_s$  and $L_l$ are equal to each other.\linebreak
+		\item Fixed unequal lengths: This approach involves assigning fixed but unequal lengths to all snakes and ladders, i.e. $L^i_s \neq  L^i_l$ \space $ \forall i \in [1, N]$ and all $L_s$  and $L_l$ are equal to each other.
 		\item Sampling from Distributions: This approach makes use of three sampling distributions in order to assign $L^i_s$ \&  $L^i_l$ \space $\forall i \in [1, N]$
 		\item Fixed Start and End Points: This diverges from the concept of explicitly calculating and assigning lengths of each snake and ladder, effectively deriving their lengths implicitly.
 	\end{enumerate}
 	
+	\subsection{Selecting unequal $L_s$ and $L_l$}
+	This approach provides with a baseline for analyzing gameplay outcomes when the lengths are purely deterministic and ensures uniformity across the experiments. The predefined unequal lengths would act as a control group to assess the impacts other methods of selecting $L_s$ and $L_l$ would have without introducing randomness. it acts as a stable point of reference clear from the effects of other variables and parameters, such as entity placement and dice randomness.
 	
 	\subsection{Rationale for Length Selection using Sampling Distributions}
 	The basis of this chapter of the research project is to study the effects of changing $L_s$ and $L_l$ on the game times while keeping the $N_s$ and $N_l$ constant. Therefore the process of determining lengths of snakes and ladders on the board becomes crucial to understanding the variability in the gameplay and try to look for balance in the same. The selection criteria for the lengths is based on probabilistic sampling methods ensuring that the lengths are diverse while adhering to constraints. The $L_s$ or $L_l$ are sampled using of the three distinct probability distributions:
@@ -80,6 +84,107 @@
 	
 	For this research, the $L_{max}$ has been set to 40. This is done to ensure that there aren't any outlier snakes or ladders which remain extremely long (spanning from the top to the bottom of the board). Also, to ensure that the generated lengths are valid and abide the by game rules, the aforementioned constraints are applied.
 	
+	\subsection{Assigning Fixed Start and End points}
+	This approach diverges from directly controlling the $L_s$ and $L_l$. Instead, it involves assigning randomized $Ladders^i_{start/end}$ and $Snakes^i_{start/end}$. This approach to the problem introduces another layer of variability by purely focusing on their placement rather than predetermined or sampled lengths.
+	For each snake, the $Snake^i_{start}$ is chosen from the range $[2, BoardSize - 1]$ abiding by the snake constraint. While, the $Snake^i_{end}$ is determined by randomly selecting tile below its starting position, i.e. $$1\leq Snake^i_{end} < Snake^i_{start}$$ 
+	For ladders, the $Ladder^i_{start}$ is chosen randomly from $[2, BoardSize - 1]$ keeping the ladder constraint in check, whilst its $Ladder^i_{end}$ is assigned randomly above its starting position, i.e. $$Ladder^i_{end}>Ladder^i_{start}$$ 
+	
+	By decoupling length from predetermined distributions, the method accommodates a wider variety of configurations, making it suitable for exploring edge cases in gameplay. The method allows for a high degree of randomness in gameplay and will be used to test the robustness of the study, offering insights into how random placement and implicit lengths impact game duration, difficulty, and variability.
+	
 	\section{Presenting Findings}
+	The simulations represent the probabilistic nature of snakes and ladders, with the outcome largely being determined by the interplay between board design, entities and inherent randomness in the dice rolls. The board design consists of a number of Snakes and Ladders with varying lengths that either move the player down or bring them closer to the goal.  This section of the chapter focuses on how the $L_{s}$ and $L_{l}$ affects the average game time. Across the three major approaches, and by using the simulated data, this chapter explores the relationship between different configurations of snakes and ladders, keeping $N_l$ and $N_s$ constant (10 each) while varying their lengths. The game has been simulated 1000 times with 10 distinct board configurations while varying the parameters independently of each other.
+	\subsection{Controlled Approach: Unequal $L_{s}$ and $L_{l}$}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\textwidth]{../withLength/UnequalLengths/approach_1_fixed_length_pairs_barplot}
+		\caption{Average Game Times for Fixed Unequal Lengths}
+		\label{fig:approach1fixedlengthpairsbarplot}
+	\end{figure}	
+	\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.32\textwidth} 
+		\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake10_Ladder5}
+		\caption{$L_s = 10$, $L_l = 5$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.32\textwidth}  
+		\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake20_Ladder10}
+		\caption{$L_s = 20$, $L_l = 10$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.32\textwidth}  
+		\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake40_Ladder20}
+		\caption{$L_s = 40$, $L_l = 20$}
+	\end{subfigure}
+	\caption{Game Time Distributions for Configurations with $L_s > L_l$}
+	\end{figure}
+	This section makes use of fixed the unequal $L_{s}$ and $L_{l}$ across 10 different board configurations each and 1000 simulations ran for each board layout. In this controlled approach, we systematically varied the $L_{s}$ and $L_{l}$. The lengths were assigned in pairs, ensuring that the $L_{s}$ and $L_{l}$ were not equal. This approach allows the analysis to isolate the impacts of length variation on game time. The bar plot (Figure 2.1) illustrates the average game times for various pairs of lengths. It is observable that the average game time generally increased as $L_s - L_l$ increases positively. This suggests that when snakes are significantly longer than the ladders, players will tend to experience more setbacks in their positions, therefore contributing to longer game times on average. There is no real observable impacts to the game times across pairs that have $L_l > L_s$. The frequency distribution plot (Figure 2.2 (c)) provides a detailed overview of the game time distribution for all the simulations conducted in the specific configuration ($L_s=40$ \& $L_l=20$). The distribution appears to be heavily right-skewed, indicating that most games end within a moderate number of moves, whilst there are occasional occurrences of significantly longer games. This skew is most likely due to the nature of dice rolls and how often the agent comes into contact with snakes despite there being ladders that are long enough. When configurations with $L_l > L_s$ are compared against one another, it can be observed that the configurations where $L_l - L_s < 20$ their spread is much tighter and looks like the normal distribution with few outliers. The average game time across these simulations also seems much closer to one another unlike the huge spikes observed in Figure 2.1.
+
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.32\textwidth} 
+			\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake5_Ladder10}
+			\caption{$L_s = 5$, $L_l = 10$}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}  
+			\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake10_Ladder20}
+			\caption{$L_s = 10$, $L_l = 20$}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}  
+			\includegraphics[width=\linewidth]{../withLength/UnequalLengths/game_time_distribution_Snake20_Ladder40}
+			\caption{$L_s = 20$, $L_l = 40$}
+		\end{subfigure}
+		\caption{Game Time Distributions for Configurations with $L_l>L_s$}
+	\end{figure}
+	
+	\subsection{Using Sampling Distributions}
+	This section delves into the effects of different sampling distributions on  $L_{s}$ and $L_{l}$. It explores three statistical distributions: uniform, normal, and exponential, each with $N_s, N_l=10$, where the  $L_{s}$ and $L_{l}$ were sampled from their respective distributions. For each distribution, 1000 games were simulated on 10 different boards. Figure 2.4 shows the aggregated averages of game times across the three sampling distributions. Here, the highest average game time stems from the exponential sampling method, followed by normal distribution and the uniform distribution fetching the lowest average game time. Sampling from the exponential distribution nets out more lengths that are smaller, whilst there still remains a lower chance of having longer entities on the board, this suggests that having more $N_s$ \& $N_l$ with smaller lengths cause the games to go on for longer. Meanwhile, the normal distribution allows for the $L_{s}$ and $L_{l}$ to be sized around between $[\mu \pm 3\sigma]$, where $\mu$ \& $\sigma$ are determined by the $L_{max}$. The simulations run under normal sampling present to be a much more stable set of configurations with lower game times. Due to the more randomly assigned lengths under the uniform sampling method, it shows a longer game on average.
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.6\linewidth]{../withLength/FinalSampling/comparative_aggregate_average_game_times}
+		\caption{Aggregated Averages of Game Time across the sampling distributions}
+		\label{fig:comparativeaggregateaveragegametimes}
+	\end{figure}
+	Figure 2.5 displays the frequency distributions of game times for a fixed layout under each sampling method. It's observable that all the three distributions exhibit right-skewness indicating while most games finish in a moderate set of moves, there may be outliers in some runs. The highest variability also can be seen in the set of simulations run under the exponential sampling, this can be attributed to the nature of smaller entities on the board, but also their placement. Figure 2.6 (b) suggests that across most boards that were generated using exponential sampling the average number of moves taken to end the game was consistently higher than any of the other boards. Figure 2.6 (a) shows that while the average number of moves remained more or less similar across most board layouts, there were a few boards with quite high averages. And, lastly the normal distribution shows the most variability across the boards played but the average game time was consistently low and very few outliers could be seen that pushed the game time upwards.
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/full_distribution_exponential}
+			\caption{Exponential Distribution}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/full_distribution_normal}
+			\caption{Normal Distribution}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/full_distribution_uniform}
+			\caption{Uniform Distribution}
+		\end{subfigure}
+		\caption{Game Time Distributions for a Fixed Layout, by Sampling Method}
+	\end{figure}
+
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/board_averages_uniform}
+			\caption{Uniform Distribution}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/board_averages_exponential}
+			\caption{Exponential Distribution}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.32\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/FinalSampling/board_averages_normal}
+			\caption{Normal Distribution}
+		\end{subfigure}
+		\caption{Average Game Time for Each Board, by Sampling Distribution}
+	\end{figure}
+	Therefore, the exponential distribution, with its propensity for generating longer lengths, generally leads to higher average game times and greater variability. The normal distribution provides a more balanced approach, while the uniform distribution results in the shortest average game times and the most predictable length distribution. 	
 	\end{document}
 	
