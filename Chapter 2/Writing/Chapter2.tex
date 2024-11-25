@@ -18,15 +18,17 @@
 
 \title{Alternate Review Systems:\\ Quantifying Enjoyability in Table-top Games}
 \author{Jai Bakshi \\ 21060322069}
-\date{September 2024}
+\date{November 2024}
 
 \begin{document}
 	\maketitle
 	\setcounter{chapter}{1}
 	\chapter{Effects of Entity Lengths on Game Time}
 	This chapter will continue the investigation of the effects of changing various parameters of the classic game of snakes and ladders, aiming to quantify the impact of various game parameters on the overall game dynamics. In this chapter, the research aims to achieve this by simulating numerous games of while systematically varying the lengths of snakes and ladders while keeping the quantities of snakes and ladders on the board as constant values. Much like the previous chapter, in order to make conclusive claims based on the computation and results, the model limits changes in parameters to only affect one category of entities on the board, i.e. the lengths of snakes and ladders. This allows the research to systematically examine how changes in these parameters affect the distribution of game duration - specifically, the number of moves needed to reach the end state.
+	
 	\section{Setting up the board}
-	The game board is modeled as a 100-tiled grid, with there being three entities on each board:
+	The game board is modeled as a 100-tiled one-dimensional sequence, with there being three entities on each board:
+
 	\begin{enumerate}
 		\item Agent: The Agent represents the player, the Agent's movement is determined by a fair six-sided dice roll. 
 		\item Snake: These entities have two terminal ends, the head and the tail. When the player lands on the head of the snake, they move to the tile at the snake's tail.
@@ -52,6 +54,32 @@
 		\item Overlap Constraint: To maintain game integrity, the endpoints of snakes and ladders cannot coincide. If an overlap occurs, the simulation setup randomly decides whether to remove the overlapping snake or ladder based on a probability of 0.5.
 	\end{enumerate}
 	
+	\section{Approaches to Assign Lengths of Snakes and Ladders}
+	For this chapter, three distinct approaches are deployed to assign the lengths of snakes and ladders on the game board. Each approach allows for unique characteristics of the board configuration to facilitate a comparative analysis of game time under varying assumptions. These are as follows:
+	\begin{enumerate}
+		\item Fixed unequal lengths: This approach involves assigning fixed but unequal lengths to all snakes and ladders, i.e. $L^i_s \neq  L^i_l$ \space $ \forall i \in [1, N]$ and all $L_s$  and $L_l$ are equal to each other.\linebreak
+		\item Sampling from Distributions: This approach makes use of three sampling distributions in order to assign $L^i_s$ \&  $L^i_l$ \space $\forall i \in [1, N]$
+		\item Fixed Start and End Points: This diverges from the concept of explicitly calculating and assigning lengths of each snake and ladder, effectively deriving their lengths implicitly.
+	\end{enumerate}
 	
-\end{document}
+	
+	\subsection{Rationale for Length Selection using Sampling Distributions}
+	The basis of this chapter of the research project is to study the effects of changing $L_s$ and $L_l$ on the game times while keeping the $N_s$ and $N_l$ constant. Therefore the process of determining lengths of snakes and ladders on the board becomes crucial to understanding the variability in the gameplay and try to look for balance in the same. The selection criteria for the lengths is based on probabilistic sampling methods ensuring that the lengths are diverse while adhering to constraints. The $L_s$ or $L_l$ are sampled using of the three distinct probability distributions:
+	\begin{enumerate}
+		\item Uniform distribution: All valid lengths between 1 and $L_max$ are equally likely, this ensures an unbiased selection across the entire range of lengths, providing a uniform probability for shorter and longer lengths.
+		$$P(L=x)=\frac{1}{L_{max}}, \forall x \in \{1,2,\ldots,L_{max}\}$$
+		\item Normal distribution: A Normal/Gaussian distribution is characterized by a mean $\mu$ and a standard deviation $\sigma$, for the lengths of snakes and ladders:
+		\begin{itemize}
+			\item $\mu$ is set to $\frac{L_{max}}{2}$, placing the most likely lengths near the midpoint of the range
+			\item $\sigma$ is set to $\frac{L_{max}}{6}$, which suggests that most lengths fall within the range $[\mu-3\sigma, \mu+3\sigma]$
+			$$P(L=x) = \frac{1}{\sqrt{2\pi\sigma^2}}{e^{\frac{(x-\mu)^2}{2\sigma^2}}, \forall x\in[1, L_{max}]}$$
+		\end{itemize}
+		\item Exponential distribution: This emphasizes on the shorter lengths, with the probability of longer lengths decreasing exponentially. The scaling parameter $\lambda$ is set to $\frac{L_{max}}{3}$ ensuring a reasonable spread of values.
+		$$P(L=x)={\lambda}e^{{-\lambda}x}, \forall x \in [1, L_{max}]$$
+	\end{enumerate}
+	
+	For this research, the $L_{max}$ has been set to 40. This is done to ensure that there aren't any outlier snakes or ladders which remain extremely long (spanning from the top to the bottom of the board). Also, to ensure that the generated lengths are valid and abide the by game rules, the aforementioned constraints are applied.
+	
+	\section{Presenting Findings}
+	\end{document}
 	
