@@ -1,4 +1,3 @@
-import os
 import random
 import numpy as np
 import pandas as pd
@@ -6,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 BOARD_SIZE = 100
+
 
 # Helper function for length sampling with fixed max_length
 def sample_length_with_fixed_max(start_pos, max_length, distribution, is_snake=True):
@@ -36,6 +36,7 @@ def sample_length_with_fixed_max(start_pos, max_length, distribution, is_snake=T
         if 1 <= end_pos <= BOARD_SIZE:
             return length
 
+
 # Generate a board using sampling
 def generate_board_with_sampling(num_snakes, num_ladders, max_length, distribution):
     """
@@ -49,7 +50,9 @@ def generate_board_with_sampling(num_snakes, num_ladders, max_length, distributi
         start_pos = random.randint(2, BOARD_SIZE - 1)  # Exclude start and end tiles
 
         # Sample length
-        length = sample_length_with_fixed_max(start_pos, max_length, distribution, is_snake)
+        length = sample_length_with_fixed_max(
+            start_pos, max_length, distribution, is_snake
+        )
         end_pos = start_pos - length if is_snake else start_pos + length
 
         # Check for overlap
@@ -60,6 +63,7 @@ def generate_board_with_sampling(num_snakes, num_ladders, max_length, distributi
         snakes_and_ladders[start_pos] = end_pos
 
     return snakes_and_ladders
+
 
 # Simulate a single game
 def play_game(snakes_and_ladders):
@@ -75,10 +79,12 @@ def play_game(snakes_and_ladders):
             position = BOARD_SIZE
     return moves
 
+
 # Run simulations for a board
 def simulate_games(snakes_and_ladders, num_simulations):
     game_times = [play_game(snakes_and_ladders) for _ in range(num_simulations)]
     return game_times
+
 
 # Plot full distribution of game times for a fixed layout
 def plot_full_distribution(snakes_and_ladders, game_times, distribution_type):
@@ -87,12 +93,15 @@ def plot_full_distribution(snakes_and_ladders, game_times, distribution_type):
     """
     plt.figure(figsize=(10, 6))
     sns.histplot(game_times, bins=30, kde=True, color="blue", edgecolor="black")
-    plt.title(f"Game Time Distribution for Fixed Layout ({distribution_type.capitalize()})")
+    plt.title(
+        f"Game Time Distribution for Fixed Layout ({distribution_type.capitalize()})"
+    )
     plt.xlabel("Game Time (Moves)")
     plt.ylabel("Frequency")
     plt.tight_layout()
     plt.savefig(f"full_distribution_{distribution_type}.png")
     plt.close()
+
 
 # Log final results into a summary CSV
 def log_final_results(all_results, num_boards, num_snakes, num_ladders, distributions):
@@ -105,15 +114,18 @@ def log_final_results(all_results, num_boards, num_snakes, num_ladders, distribu
         for board_index in range(num_boards):
             # Calculate average game time
             avg_game_time = np.mean(game_times_all_boards[board_index])
-            final_results.append({
-                "Distribution": distribution.capitalize(),
-                "Board Number": board_index + 1,
-                "Average Game Time": avg_game_time
-            })
+            final_results.append(
+                {
+                    "Distribution": distribution.capitalize(),
+                    "Board Number": board_index + 1,
+                    "Average Game Time": avg_game_time,
+                }
+            )
 
     # Convert to DataFrame and save
     results_df = pd.DataFrame(final_results)
     results_df.to_csv("final_results.csv", index=False)
+
 
 # Log board-specific details into individual CSV files
 def log_board_details(all_results, num_boards, num_snakes, num_ladders, distributions):
@@ -125,19 +137,34 @@ def log_board_details(all_results, num_boards, num_snakes, num_ladders, distribu
 
         for board_index in range(num_boards):
             # Generate the board to calculate metrics
-            snakes_and_ladders = generate_board_with_sampling(num_snakes, num_ladders, max_length, distribution)
+            snakes_and_ladders = generate_board_with_sampling(
+                num_snakes, num_ladders, max_length, distribution
+            )
 
             # Record snake/ladder positions
             board_data = {
                 "Board Number": board_index + 1,
-                "Snakes": "; ".join([f"{start}->{end}" for start, end in snakes_and_ladders.items() if start > end]),
-                "Ladders": "; ".join([f"{start}->{end}" for start, end in snakes_and_ladders.items() if start < end])
+                "Snakes": "; ".join(
+                    [
+                        f"{start}->{end}"
+                        for start, end in snakes_and_ladders.items()
+                        if start > end
+                    ]
+                ),
+                "Ladders": "; ".join(
+                    [
+                        f"{start}->{end}"
+                        for start, end in snakes_and_ladders.items()
+                        if start < end
+                    ]
+                ),
             }
             board_details.append(board_data)
 
         # Save board details to a CSV
         details_df = pd.DataFrame(board_details)
         details_df.to_csv(f"{distribution}_board_details.csv", index=False)
+
 
 # Plotting functions
 def plot_board_averages(all_results):
@@ -152,8 +179,10 @@ def plot_board_averages(all_results):
 
         # Plot the board averages
         plt.figure(figsize=(10, 6))
-        plt.bar(board_numbers, board_averages, color="skyblue", edgecolor="black", alpha=0.8)
-        
+        plt.bar(
+            board_numbers, board_averages, color="skyblue", edgecolor="black", alpha=0.8
+        )
+
         # Annotate the bars with the average values
         for i, avg in enumerate(board_averages):
             plt.text(i, avg + 0.5, f"{avg:.2f}", ha="center", fontsize=9)
@@ -167,6 +196,7 @@ def plot_board_averages(all_results):
         plt.savefig(f"board_averages_{distribution}.png")
         plt.close()
 
+
 def plot_comparative_aggregate_averages(all_results):
     """
     Plots the aggregate average game time for each sampling distribution.
@@ -175,7 +205,9 @@ def plot_comparative_aggregate_averages(all_results):
     """
     # Calculate the overall average game time for each distribution
     aggregate_averages = {
-        distribution: np.mean([np.mean(game_times) for game_times in game_times_all_boards])
+        distribution: np.mean(
+            [np.mean(game_times) for game_times in game_times_all_boards]
+        )
         for distribution, game_times_all_boards in all_results.items()
     }
 
@@ -186,7 +218,7 @@ def plot_comparative_aggregate_averages(all_results):
         aggregate_averages.values(),
         color=["skyblue", "salmon", "limegreen"],
         edgecolor="black",
-        alpha=0.8
+        alpha=0.8,
     )
 
     # Annotate the bars with average values
@@ -199,6 +231,7 @@ def plot_comparative_aggregate_averages(all_results):
     plt.ylabel("Aggregate Average Game Time (Moves)")
     plt.tight_layout()
     plt.savefig("comparative_aggregate_average_game_times.png")
+
 
 # Main program logic
 if __name__ == "__main__":
@@ -214,17 +247,19 @@ if __name__ == "__main__":
 
     for distribution in distributions:
         game_times_all_boards = []
-        
+
         # Generate and simulate for each board
         for board_index in range(num_boards):
-            snakes_and_ladders = generate_board_with_sampling(num_snakes, num_ladders, max_length, distribution)
+            snakes_and_ladders = generate_board_with_sampling(
+                num_snakes, num_ladders, max_length, distribution
+            )
             game_times = simulate_games(snakes_and_ladders, num_simulations)
             game_times_all_boards.append(game_times)
 
             # Plot full distribution for the first board layout
             if board_index == 0:
                 plot_full_distribution(snakes_and_ladders, game_times, distribution)
-        
+
         # Store results for all boards of this distribution
         all_results[distribution] = game_times_all_boards
 
@@ -235,3 +270,4 @@ if __name__ == "__main__":
     # Additional plots and analyses can be called here
     plot_board_averages(all_results)
     plot_comparative_aggregate_averages(all_results)
+
