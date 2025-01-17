@@ -153,7 +153,7 @@ def simulate_fixed_length_pairs(num_boards, num_simulations, num_snakes, num_lad
     plt.savefig("approach_1_fixed_length_pairs_boxplot.png")
 
 if __name__ == "__main__":
-    num_boards = 10
+    num_boards = 20
     num_simulations = 1000
     num_snakes = 5
     num_ladders = 5

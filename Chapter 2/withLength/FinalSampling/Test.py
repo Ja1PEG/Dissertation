@@ -6,7 +6,6 @@ import seaborn as sns
 
 BOARD_SIZE = 100
 
-
 # Helper function for length sampling with fixed max_length
 def sample_length_with_fixed_max(start_pos, max_length, distribution, is_snake=True):
     """
@@ -36,7 +35,6 @@ def sample_length_with_fixed_max(start_pos, max_length, distribution, is_snake=T
         if 1 <= end_pos <= BOARD_SIZE:
             return length
 
-
 # Generate a board using sampling
 def generate_board_with_sampling(num_snakes, num_ladders, max_length, distribution):
     """
@@ -64,7 +62,6 @@ def generate_board_with_sampling(num_snakes, num_ladders, max_length, distributi
 
     return snakes_and_ladders
 
-
 # Simulate a single game
 def play_game(snakes_and_ladders):
     position = 0
@@ -79,28 +76,10 @@ def play_game(snakes_and_ladders):
             position = BOARD_SIZE
     return moves
 
-
 # Run simulations for a board
 def simulate_games(snakes_and_ladders, num_simulations):
     game_times = [play_game(snakes_and_ladders) for _ in range(num_simulations)]
     return game_times
-
-
-# Plot full distribution of game times for a fixed layout
-def plot_full_distribution(snakes_and_ladders, game_times, distribution_type):
-    """
-    Plots the full distribution of game times for a fixed board layout.
-    """
-    plt.figure(figsize=(10, 6))
-    sns.histplot(game_times, bins=30, kde=True, color="blue", edgecolor="black")
-    plt.title(
-        f"Game Time Distribution for Fixed Layout ({distribution_type.capitalize()})"
-    )
-    plt.xlabel("Game Time (Moves)")
-    plt.ylabel("Frequency")
-    plt.tight_layout()
-    plt.savefig(f"full_distribution_{distribution_type}.png")
-    plt.close()
 
 
 # Log final results into a summary CSV
@@ -125,7 +104,6 @@ def log_final_results(all_results, num_boards, num_snakes, num_ladders, distribu
     # Convert to DataFrame and save
     results_df = pd.DataFrame(final_results)
     results_df.to_csv("final_results.csv", index=False)
-
 
 # Log board-specific details into individual CSV files
 def log_board_details(all_results, num_boards, num_snakes, num_ladders, distributions):
@@ -165,7 +143,6 @@ def log_board_details(all_results, num_boards, num_snakes, num_ladders, distribu
         details_df = pd.DataFrame(board_details)
         details_df.to_csv(f"{distribution}_board_details.csv", index=False)
 
-
 # Plotting functions
 def plot_board_averages(all_results):
     """
@@ -195,7 +172,89 @@ def plot_board_averages(all_results):
         plt.tight_layout()
         plt.savefig(f"board_averages_{distribution}.png")
         plt.close()
+        
+# Plot full distribution of game times for multiple layouts (separated plots with aggregated overlay)
+def plot_multiple_distributions(all_results, num_boards_to_plot):
+    """
+    Plots the distribution of game times for multiple board layouts,
+    with a separate plot for each sampling distribution.
+    Each plot also includes an overlay of the aggregated distribution.
+    """
+    colors = ["blue", "green", "red"]
+    distribution_names = ["Uniform", "Normal", "Exponential"]
 
+    for i, distribution in enumerate(all_results.keys()):
+        plt.figure(figsize=(12, 6))
+
+        # --- Individual Board Layouts ---
+        for board_index in range(num_boards_to_plot):
+            game_times = all_results[distribution][board_index]
+            sns.kdeplot(
+                game_times,
+                label=f"Board {board_index + 1}",
+                color=colors[i],
+                alpha=0.5,
+                linestyle="--",  # Use dashed lines for individual boards
+            )
+
+        # --- Aggregated Distribution ---
+        all_game_times = [
+            game_time
+            for game_times_one_board in all_results[distribution]
+            for game_time in game_times_one_board
+        ]
+        sns.kdeplot(
+            all_game_times,
+            label=f"{distribution_names[i]} (Aggregated)",
+            color=colors[i],
+            linewidth=2,
+        )
+
+        plt.title(f"Game Time Distributions for Multiple Layouts ({distribution_names[i]})")
+        plt.xlabel("Game Time (Moves)")
+        plt.ylabel("Density")
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(f"multiple_distributions_{distribution}.png")
+        plt.close()
+
+# Plot aggregated distributions for all board layouts (overlayed)
+def plot_aggregated_distributions_overlay(all_results):
+    """
+    Plots the aggregated distribution of game times for all board layouts,
+    overlaying the distributions for each sampling method on the same plot.
+    """
+    plt.figure(figsize=(10, 6))
+    colors = {"uniform": "blue", "normal": "green", "exponential": "red"}
+    distribution_names = {
+        "uniform": "Uniform",
+        "normal": "Normal",
+        "exponential": "Exponential",
+    }  # For clearer labels
+
+    for distribution, game_times_all_boards in all_results.items():
+        # Flatten the list of game times from all boards into a single list
+        all_game_times = [
+            game_time
+            for game_times_one_board in game_times_all_boards
+            for game_time in game_times_one_board
+        ]
+
+        # Plot the aggregated distribution for the current sampling method
+        sns.kdeplot(
+            all_game_times,
+            label=f"{distribution_names[distribution]} (Aggregated)",
+            color=colors[distribution],
+            alpha=0.7,
+        )
+
+    plt.title("Aggregated Game Time Distributions (All Layouts)")
+    plt.xlabel("Game Time (Moves)")
+    plt.ylabel("Density")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig("aggregated_distributions_overlayed.png")
+    plt.close()
 
 def plot_comparative_aggregate_averages(all_results):
     """
@@ -232,7 +291,6 @@ def plot_comparative_aggregate_averages(all_results):
     plt.tight_layout()
     plt.savefig("comparative_aggregate_average_game_times.png")
 
-
 # Main program logic
 if __name__ == "__main__":
     num_boards = 10
@@ -247,21 +305,17 @@ if __name__ == "__main__":
 
     for distribution in distributions:
         game_times_all_boards = []
-
-        # Generate and simulate for each board
         for board_index in range(num_boards):
             snakes_and_ladders = generate_board_with_sampling(
                 num_snakes, num_ladders, max_length, distribution
             )
             game_times = simulate_games(snakes_and_ladders, num_simulations)
             game_times_all_boards.append(game_times)
-
-            # Plot full distribution for the first board layout
-            if board_index == 0:
-                plot_full_distribution(snakes_and_ladders, game_times, distribution)
-
-        # Store results for all boards of this distribution
         all_results[distribution] = game_times_all_boards
+
+    # Plot distributions for multiple board layouts
+    num_boards_to_plot = 10
+    plot_multiple_distributions(all_results, num_boards_to_plot)
 
     # Log results
     log_final_results(all_results, num_boards, num_snakes, num_ladders, distributions)
@@ -270,4 +324,4 @@ if __name__ == "__main__":
     # Additional plots and analyses can be called here
     plot_board_averages(all_results)
     plot_comparative_aggregate_averages(all_results)
-
+    plot_aggregated_distributions_overlay(all_results)
