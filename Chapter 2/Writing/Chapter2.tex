@@ -185,6 +185,32 @@
 		\end{subfigure}
 		\caption{Average Game Time for Each Board, by Sampling Distribution}
 	\end{figure}
-	Therefore, the exponential distribution, with its propensity for generating longer lengths, generally leads to higher average game times and greater variability. The normal distribution provides a more balanced approach, while the uniform distribution results in the shortest average game times and the most predictable length distribution. 	
+	Therefore, the exponential distribution, with its propensity for generating longer lengths, generally leads to higher average game times and greater variability. The normal distribution provides a more balanced approach, while the uniform distribution results in the shortest average game times and the most predictable length distribution. 
+	
+	\subsection{Randomly Generated Boards}
+	This subsection looks at the effect of randomly generated snakes and ladders based on $Ladder_{start/end}$ \& $Snake_{start/end}$ positions. These positions are generated while keeping the length constraints into consideration. This approach adds more variability as compared to previous approaches where the lengths were first controlled. Figure 2.7 (a) illustrates the average game times across 10 different boards generated while following the random assignment for this approach. Each bar represents the average game time for each specific board and it can be seen that variability in average game times across the boards is quite evident. The average across boards range from nearly 22 to 40 moves. Figure 2.7 (b) shows the frequency distribution of game times across all the games, and it is indicative of the same variability as well, as evident by the random spikes in certain sections and the kernel density line as well. Certain boards, due to the specific configuration of snakes and ladders, may present more challenges or opportunities for the agent, leading to longer or shorter games, respectively. This could be due to the nature of the computation as well. While lengths were randomly assigned across a smaller range of values in the previous approach, this approach allows the simulations to pick and choose random start and end positions which have far more range to be chosen from. It could be possible that on some boards, most of the snakes and ladders were more densely populated close to one another, whilst some may have them widely spread apart. This would affect the agent's movement significantly, since, boards with more widely spread apart entities, have a higher chance for them to be triggered, whilst more densely populated boards have a tendency where most entities might get skipped due to the lengths of the entities. 
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[b]{0.48\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/RandomLength/approach_3_random_points}
+			\caption{Average Game Time for Random Points}
+			\label{fig:approach3randompoints}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.48\textwidth}
+			\includegraphics[width=\linewidth]{../withLength/RandomLength/approach_3_game_time_distribution}
+			\caption{Frequency Distribution of Game Times}
+			\label{fig:approach3gametimedistribution}
+		\end{subfigure}
+		\caption{Analysis of Randomly Generated Boards}
+	\end{figure}
+	
+		\section{Further Attempts at Modeling}
+	To investigate the dynamics of the game even further, the research seeks to employ a Markov model in the coming chapters. Markov models are most suited to analyse stochastic processes where the future states depend on the current state of the agent, making them a great fit for the game of Snakes and Ladders. In the suggested model, each tile would represent a state in the Markov chain. Transitions between states will be determined by the probabilities of dice rolls and the positioning and effects of the entities on the board, namely, the Snake and the Ladder. By constructing an appropriate transition matrix and analyzing its properties, it would be possible to gain insights into various aspects of the game mechanics, calculate an expected game duration for any board configuration, understand the dynamics of probabilities of landing on specific tiles of a the board from any point on the board, identify zones or specific tiles that would rarely be traversed and judge the overall effects on the entities on the board. The Markov model should be able to compliment the simulation-based approach that has been conducted thus far, offering a more analytical framework to understand the dynamics of the game.
+	
+	\section{Analysis and Conclusion}
+	This chapter has taken a look at the impacts of $L_s$ and $L_l$ on the game dynamics by trying to run the simulations with three different approaches, either by statically assigning them lengths, or by statistically sampling $L_s$ and $L_l$ based on exponential, normal and uniform distributions and lastly, by completely randomizing start and end points. The findings have seemingly revealed that the lengths have a significant effect on the average game times, and the variability in game time across various configurations. Here, longer snakes tend to prolong games, whilst longer ladders can aid the progress of the agent across the board, thereby increasing or reducing the game time significantly. It was also noticed that the choice of sampling distributions to decide the lengths also play a major role in the game dynamics. Exponential distributions lead to high variability in game times and  make the player sit through significantly longer games, whilst other distributions provide a more balanced and stable approach to assigning these entities their lengths.
+	These insights have great implications on game design and balancing, which could in turn allow game designers to fine-tune how challenging games can be and adjust what they would like the game duration to be, especially for games that present a similar model to Snakes and Ladders which have simpler and fewer mechanics. It also showcases how by isolating parameter adjustments categorically can help pinpoint mechanics that may be posing an issue to game enjoyment in terms of game dynamics and the player experience. This chapter also seeks to lay groundwork for future research that would be making use of Markov models to provide a more nuanced understanding of the game. 
+	
 	\end{document}
 	
