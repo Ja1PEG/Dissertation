@@ -1,0 +1,76 @@
+\chapter{Setting up a Markov Model}
+In this chapter, an analytical framework based on Markov chain theory to model the dynamics of Snakes and Ladders is utilised. This approach provides a rigorous method for quantifying game progression and predicting key metrics, such as the expected number of turns to reach the final board position. 
+
+\section{What are Markov Chains}
+A Markov chain is a mathematical system that experiences transitions from one state to another in a chain-like process. Its defining characteristic is the memoryless property: the probability of transitioning to the next state depends solely on the current state and not on the sequence of events that preceded it. In the context of Snakes and Ladders, each board position is treated as a state, and the outcome of a dice roll determines the probability of moving from one state to another.
+
+By adopting a Markov chain framework, the random nature of the game can be captured, where each dice roll is independent—and incorporate the special rules governing snakes and ladders. This model enables a transition beyond empirical simulation and derive analytical expressions for key performance measures, such as the average number of moves required to complete the game.
+
+\section{Fundamental Concepts}
+Before detailing the construction of our model, it is important to define several key concepts:
+\begin{enumerate}
+	\item 	\textbf{States:} In our model, each tile on the board (from 0 to the board size) represents a state. The starting position is state 0, and the final position (the goal) is an absorbing state, meaning that once reached, no further transitions occur.
+	\item \textbf{Transitions:} A transition is the movement from one state to another. In Snakes and Ladders, transitions occur as a result of dice rolls. Each roll yields one of six outcomes (with equal probability of 	$\frac{1}{6}$), which, when added to the current position, determine the next state.
+	\item \textbf{Absorbing States: }An absorbing state is one that, once entered, cannot be left. In our game, the final tile is an absorbing state because the game terminates when the player reaches or exceeds it.
+	\item \textbf{Memorylessness: }The Markov property implies that the probability of moving to a new state depends solely on the current state, not on how that state was reached. This simplifies the analysis, as the past history of the game does not need to be considered when determining future moves.
+\end{enumerate}
+
+\section{Constructing the Transition Matrix}
+The transition matrix is a square matrix $P$ of dimensions $(N+1)  \times (N+1)$ (where $N$ is the board size), and each entry $P(i,j)$ represents the probability of moving from state $i$ to state $j$ in one turn. $N_S$ and $N_L = 10$ and their lengths are randomly assigned using the fixed start and end points approach from Chapter 2.
+
+\subsection{Methodology}
+For each non-absorbing state (i.e. every state except tile 100):
+\begin{enumerate}
+	\item \textbf{Dice Roll Outcomes:} The agent rolls a fair six-sided die. Each outcome, $k$ (where $1 \leq k \leq 6$), occurs with probability $\frac{1}{6}$
+	\item \textbf{Movement Calculation:} The tentative new state is calculated by adding the dice roll $k$ to the current state $i$. If the tentative new state exceeds the board limits, the excess is subtracted from the final state. This ensures that the player remains on a valid tile.
+	\item \textbf{Entity Adjustments:} If the resulting state corresponds to the head of a snake or the base of a ladder, the state is immediately updated to the corresponding tail or top, respectively.
+	\item \textbf{Matrix Population:} For each dice outcome, the appropriate transition probability is added to the matrix entry corresponding to the final state after making all adjustments
+\end{enumerate}
+
+For the absorbing state (the final board position), the row in the matrix is set to have a probability of 1 for the remaining in that state, reflecting that no further moves occur once the goal is reached.
+
+For all non-absorbing states $i$:
+\[
+P(i, j) = \sum_{k=1}^{6} \frac{1}{6} \cdot \mathbf{1}\{ f(i,k) = j \}
+\]
+where $f(i,k)$ is the function that computes the new state after adding the dice roll $k$ to state $i$, applying reflection if necessary, and adjusting for any snake or ladder. The indicator function $\mathbf{1}\{\cdot\}$ equals 1 if the condition is met, and 0 otherwise.
+
+\[
+P(n, n) = 1 \quad \text{and} \quad P(n, j) = 0 \quad \text{for} \quad j \neq n.
+\]
+
+This formulation guarantees that each row of the transition matrix sums to 1, thereby satisfying the properties of a stochastic matrix.
+
+\section{Expected Turns via the Fundamental Matrix}
+
+To determine the average number of moves required to reach the absorbing state from the starting state, we employ the concept of the \textit{fundamental matrix}.
+
+\subsection{Partitioning the Matrix}
+
+The transition matrix $P$ is partitioned into two segments:
+\begin{itemize}
+	\item $Q$: The submatrix corresponding to the transient states (all states except the absorbing state).
+	\item $R$: The submatrix describing transitions from transient states to the absorbing state.
+\end{itemize}
+
+\subsection{Fundamental Matrix Calculation}
+
+The fundamental matrix $N$ is computed as:
+\[
+N = (I - Q)^{-1}
+\]
+where $I$ is the identity matrix of the same dimension as $Q$. The entry $N(i, j)$ represents the expected number of times the process is in state $j$ when starting from state $i$ before absorption occurs.
+
+\subsection{Deriving Expected Turns}
+
+The expected number of turns $t$ required to reach the absorbing state from the initial state (state 0) is given by summing the entries in the first row of $N$:
+\[
+t = \sum_{j} N(0, j)
+\]
+This sum reflects the total expected visits to all transient states, effectively yielding the average number of turns needed to complete the game.
+
+\section{Steady-State Distribution in an Absorbing Chain}
+
+%	While the primary interest in an absorbing Markov chain is the expected time to absorption, analysing the steady-state distribution can provide insight into the transient behaviour of the system. By iteratively multiplying an initial state vector by the transition matrix, one observes the evolution of the probability distribution over the states. Over a sufficiently large number of iterations, the state probabilities converge, highlighting the relative frequency of being in particular states before the game terminates.
+
+\section{Conclusion}
