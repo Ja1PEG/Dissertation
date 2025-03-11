@@ -83,7 +83,7 @@ The box plot (Fig. \ref{fig:boxplots}) illustrates the distribution of average g
 \begin{figure}[th]
 	\centering
 	\includegraphics[width=0.8\textwidth]{"../Chapter 1/BoxPlots"}
-	\caption{Distribution of Average Game Times Grouped by $N_S$ and $N_L$}
+	\caption{\textbf{Distribution of Average Game Times Grouped by $N_S$ and $N_L$:} Box plot shows higher variability in average game time for extreme $N_S$/$N_L$ differences. Fewer ladders correlate with longer game times; outliers indicate luck-dependent game lengths.}
 	\label{fig:boxplots}
 \end{figure}
 
@@ -109,7 +109,7 @@ The effect of snakes on game time, however, is not strictly linear. For example,
 \begin{figure}[th]
 	\centering
 	\includegraphics[width=0.5\textwidth]{"../Chapter 1/Heatmap"}
-	\caption{Heatmap of Average Game Times}
+	\caption{\textbf{Heatmap of Average Game Times:} Heatmap shows decreasing average game time with increasing $N_L$, especially at higher $N_S$. $N_S$ effect is non-linear; game time significantly increases only beyond a certain $N_S$ threshold.}
 	\label{fig:heatmap}
 \end{figure}
 
@@ -121,7 +121,7 @@ This section presents findings from simulations using fixed, unequal lengths for
 \begin{figure}[th]
 	\centering
 	\includegraphics[width=0.5\textwidth]{"../Chapter 2/withLength/UnequalLengths/approach_1_fixed_length_pairs_barplot"}
-	\caption{Average Game Times for Fixed Unequal Lengths}
+	\caption{\textbf{Average Game Times for Fixed Unequal Lengths:}Bar plot shows game time increases with widening snake-ladder length difference ($L_S - L_L$), particularly when snakes are longer. $L_L > L_S$pairs show minimal game time impact.}
 	\label{fig:approach1fixedlengthpairsbarplot}
 \end{figure}
 
@@ -133,7 +133,7 @@ The frequency distribution plot (Fig. \ref{fig:fixed_lengths_dist} (c)) provides
 	\subfloat[]{\includegraphics[width=0.4\textwidth]{"../Chapter 2/withLength/UnequalLengths/game_time_distribution_Snake20_Ladder10"}} 
 	\linebreak
 	\subfloat[]{\includegraphics[width=0.4\textwidth]{"../Chapter 2/withLength/UnequalLengths/game_time_distribution_Snake40_Ladder20"}} 
-	\caption{Game Time Distributions for Configurations with $L^S > L_L$}
+	\caption{\textbf{Game Time Distributions for Configurations with $L_S > L_L$:}Histograms of these configurations show right-skewness, indicating occasional longer games. Skew is attributed to dice roll randomness and snake encounters, despite ladders.}
 	\label{fig:fixed_lengths_dist}
 \end{figure}
 
@@ -145,7 +145,7 @@ This section investigates the effects of different sampling distributions on sna
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/comparative_aggregate_average_game_times.png"} 
-	\caption{Aggregated Averages of Game Time across the sampling distributions}
+	\caption{\textbf{Aggregated Averages of Game Time across the sampling distributions:} Bar plot compares average game times for uniform, normal, and exponential length distributions. Exponential distribution yields highest, normal lowest average game time, suggesting shorter lengths extend game duration.}
 	\label{fig:sampling_dist_avg_times}
 \end{figure}
 
@@ -156,7 +156,7 @@ Frequency distributions of game times for a fixed board layout under each sampli
 	\subfloat[]{\includegraphics[width=0.3\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/full_distribution_exponential.png"}} 
 	\subfloat[]{\includegraphics[width=0.3\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/full_distribution_normal.png"}} 
 	\subfloat[]{\includegraphics[width=0.3\textwidth]{/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/full_distribution_uniform.png}} 
-	\caption{Game Time Distributions for a Fixed Layout, by Sampling Method}
+	\caption{\textbf{Game Time Distributions for a Fixed Layout, by Sampling Method:} Histograms for a fixed layout show right-skewness across all sampling methods. Exponential sampling exhibits highest variability, possibly due to smaller entities and placement.}
 	\label{fig:sampling_dist_layout_dists}
 \end{figure}
 
@@ -166,7 +166,7 @@ Frequency distributions of game times for a fixed board layout under each sampli
 	\subfloat[]{\includegraphics[width=0.45\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/board_averages_normal.png"}}
 	\linebreak
 	\subfloat[]{\includegraphics[width=0.45\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/FinalSampling/board_averages_uniform.png"}}
-	\caption{Average Game Time for Each Board, by Sampling Distribution}
+	\caption{\textbf{Average Game Time for Each Board, by Sampling Distribution:} The plots show average game time for 10 boards, by sampling distribution. Uniform distribution yields consistently lower averages. Normal distribution shows highest board variability, but low average times. Exponential sampling generally results in higher average times.}
 	\label{fig:sampling_dist_board_avg_times}
 \end{figure}
 
@@ -179,7 +179,7 @@ This section examines the effect of randomly generated snakes and ladders based 
 	\centering
 	\subfloat[]{\includegraphics[width=0.45\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/RandomLength/approach_3_game_time_distribution.png"}}
 	\subfloat[]{\includegraphics[width=0.45\textwidth]{"/home/ja1peg/Desktop/DissertationDocs/Dissertation/Chapter 2/withLength/RandomLength/approach\_3\_random\_points.png"}} 
-	\caption{Analysis of Randomly Generated Boards}
+	\caption{\textbf{Analysis of Randomly Generated Boards:} (a) Game time distribution for a random board shows variability within a board. (b) Average game time across 10 random boards varies significantly (22-40 moves), highlighting random placement impact.}
 	\label{fig:random_boards_avg_times}
 	\label{fig:random_boards_game_dist}
 \end{figure}

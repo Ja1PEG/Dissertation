@@ -1,76 +1,23 @@
-\chapter{Setting up a Markov Model}
-In this chapter, an analytical framework based on Markov chain theory to model the dynamics of Snakes and Ladders is utilised. This approach provides a rigorous method for quantifying game progression and predicting key metrics, such as the expected number of turns to reach the final board position. 
+\chapter{Scaling the Game Board: Impact on Game Hardness and Duration}
 
-\section{What are Markov Chains}
-A Markov chain is a mathematical system that experiences transitions from one state to another in a chain-like process. Its defining characteristic is the memoryless property: the probability of transitioning to the next state depends solely on the current state and not on the sequence of events that preceded it. In the context of Snakes and Ladders, each board position is treated as a state, and the outcome of a dice roll determines the probability of moving from one state to another.
+\section{Introduction: Board Size as a Determinant of Game Hardness}
 
-By adopting a Markov chain framework, the random nature of the game can be captured, where each dice roll is independent—and incorporate the special rules governing snakes and ladders. This model enables a transition beyond empirical simulation and derive analytical expressions for key performance measures, such as the average number of moves required to complete the game.
+In the preceding chapter, the influence of snake and ladder \textit{lengths} and the \textit{number} of these entities on the board was systematically examined. It was observed how varying entity lengths, through different distributional approaches, alters the average game time and the overall shape of the game's turn distribution.  Having established the sensitivity of game dynamics to entity lengths, this chapter now turns its attention to another fundamental parameter: the \textit{size} of the game board itself. 
 
-\section{Fundamental Concepts}
-Before detailing the construction of our model, it is important to define several key concepts:
+This chapter investigates how scaling the dimensions of the game board, while maintaining a consistent density of snakes and ladders and keeping their individual lengths fixed, impacts key gameplay metrics.  The primary focus will be on understanding how board size influences the \textit{hardness} of the game. In this context, game hardness is operationally defined through two readily quantifiable measures: \textbf{average game time}, representing the typical duration of a play session, and \textbf{probability of winning within a specified number of turns}, reflecting the likelihood of achieving a relatively quick victory.  These metrics provide complementary perspectives on game challenge and player experience, with average game time indicating the overall time investment required and win probability offering insight into the game's pace and potential for swift success.
+
+By systematically varying the board size and analysing the resulting changes in average game time and win probabilities, this chapter aims to elucidate how board dimensions, in conjunction with fixed entity characteristics, shape the mechanical properties and, by extension, the mechanical enjoyability of Snakes and Ladders.  The hypothesis is that increasing board size, even with constant entity density and lengths, will lead to longer average game times, reflecting the greater distance to traverse to reach the goal. However, the precise nature of this scaling relationship, and whether it remains linear or exhibits more complex patterns, remains an open question that this chapter will address through simulation-based analysis.
+
+
+\section{Methodology: Simulation Setup for Board Size Scaling}
+
+To investigate the impact of board size, a simulation experiment was designed, varying the linear dimension, $n$, of a square Snakes and Ladders board, resulting in board sizes $N = n^2$. The following board sizes were systematically explored: $8 \times 8$ (64 tiles), $10 \times 10$ (100 tiles), $12 \times 12$ (144 tiles), $14 \times 14$ (196 tiles), $16 \times 16$ (256 tiles), $18 \times 18$ (324 tiles), and $20 \times 20$ (400 tiles).  For each board size, a constant density of snakes and ladders was maintained, set at 0.1 entities per tile, meaning the number of snakes and the number of ladders were both calculated as $0.1 \times N$.  Crucially, the individual lengths of all snakes and ladders were also kept \textit{fixed} at 20 tiles, irrespective of board size, to isolate the effect of board dimensions.
+
+For each board size configuration, 10,000 game simulations were conducted using the agent-based simulation program developed in the preceding chapters. In each simulation, the number of turns taken to complete the game, the sequence of tile positions visited by the agent, and the instances where snakes or ladders were triggered were recorded. From these simulation runs, the following key metrics were extracted to quantify game hardness:
+
 \begin{enumerate}
-	\item 	\textbf{States:} In our model, each tile on the board (from 0 to the board size) represents a state. The starting position is state 0, and the final position (the goal) is an absorbing state, meaning that once reached, no further transitions occur.
-	\item \textbf{Transitions:} A transition is the movement from one state to another. In Snakes and Ladders, transitions occur as a result of dice rolls. Each roll yields one of six outcomes (with equal probability of 	$\frac{1}{6}$), which, when added to the current position, determine the next state.
-	\item \textbf{Absorbing States: }An absorbing state is one that, once entered, cannot be left. In our game, the final tile is an absorbing state because the game terminates when the player reaches or exceeds it.
-	\item \textbf{Memorylessness: }The Markov property implies that the probability of moving to a new state depends solely on the current state, not on how that state was reached. This simplifies the analysis, as the past history of the game does not need to be considered when determining future moves.
+	\item \textbf{Average Game Time (Simulation):}  The mean number of turns taken across 10,000 simulated games for each board size, providing a measure of typical game duration.
+	\item \textbf{Probability of Winning within N/2 Turns:} Calculated as the proportion of games completed within $N/2$ turns, where $N$ is the board size, representing the probability of a relatively quick win (within half the number of tiles).
+	\item \textbf{Probability of Winning within N/4 Turns:}  Calculated as the proportion of games completed within $N/4$ turns, representing the probability of a very swift win (within a quarter of the number of tiles).
 \end{enumerate}
 
-\section{Constructing the Transition Matrix}
-The transition matrix is a square matrix $P$ of dimensions $(N+1)  \times (N+1)$ (where $N$ is the board size), and each entry $P(i,j)$ represents the probability of moving from state $i$ to state $j$ in one turn. $N_S$ and $N_L = 10$ and their lengths are randomly assigned using the fixed start and end points approach from Chapter 2.
-
-\subsection{Methodology}
-For each non-absorbing state (i.e. every state except tile 100):
-\begin{enumerate}
-	\item \textbf{Dice Roll Outcomes:} The agent rolls a fair six-sided die. Each outcome, $k$ (where $1 \leq k \leq 6$), occurs with probability $\frac{1}{6}$
-	\item \textbf{Movement Calculation:} The tentative new state is calculated by adding the dice roll $k$ to the current state $i$. If the tentative new state exceeds the board limits, the excess is subtracted from the final state. This ensures that the player remains on a valid tile.
-	\item \textbf{Entity Adjustments:} If the resulting state corresponds to the head of a snake or the base of a ladder, the state is immediately updated to the corresponding tail or top, respectively.
-	\item \textbf{Matrix Population:} For each dice outcome, the appropriate transition probability is added to the matrix entry corresponding to the final state after making all adjustments
-\end{enumerate}
-
-For the absorbing state (the final board position), the row in the matrix is set to have a probability of 1 for the remaining in that state, reflecting that no further moves occur once the goal is reached.
-
-For all non-absorbing states $i$:
-\[
-P(i, j) = \sum_{k=1}^{6} \frac{1}{6} \cdot \mathbf{1}\{ f(i,k) = j \}
-\]
-where $f(i,k)$ is the function that computes the new state after adding the dice roll $k$ to state $i$, applying reflection if necessary, and adjusting for any snake or ladder. The indicator function $\mathbf{1}\{\cdot\}$ equals 1 if the condition is met, and 0 otherwise.
-
-\[
-P(n, n) = 1 \quad \text{and} \quad P(n, j) = 0 \quad \text{for} \quad j \neq n.
-\]
-
-This formulation guarantees that each row of the transition matrix sums to 1, thereby satisfying the properties of a stochastic matrix.
-
-\section{Expected Turns via the Fundamental Matrix}
-
-To determine the average number of moves required to reach the absorbing state from the starting state, we employ the concept of the \textit{fundamental matrix}.
-
-\subsection{Partitioning the Matrix}
-
-The transition matrix $P$ is partitioned into two segments:
-\begin{itemize}
-	\item $Q$: The submatrix corresponding to the transient states (all states except the absorbing state).
-	\item $R$: The submatrix describing transitions from transient states to the absorbing state.
-\end{itemize}
-
-\subsection{Fundamental Matrix Calculation}
-
-The fundamental matrix $N$ is computed as:
-\[
-N = (I - Q)^{-1}
-\]
-where $I$ is the identity matrix of the same dimension as $Q$. The entry $N(i, j)$ represents the expected number of times the process is in state $j$ when starting from state $i$ before absorption occurs.
-
-\subsection{Deriving Expected Turns}
-
-The expected number of turns $t$ required to reach the absorbing state from the initial state (state 0) is given by summing the entries in the first row of $N$:
-\[
-t = \sum_{j} N(0, j)
-\]
-This sum reflects the total expected visits to all transient states, effectively yielding the average number of turns needed to complete the game.
-
-\section{Steady-State Distribution in an Absorbing Chain}
-
-%	While the primary interest in an absorbing Markov chain is the expected time to absorption, analysing the steady-state distribution can provide insight into the transient behaviour of the system. By iteratively multiplying an initial state vector by the transition matrix, one observes the evolution of the probability distribution over the states. Over a sufficiently large number of iterations, the state probabilities converge, highlighting the relative frequency of being in particular states before the game terminates.
-
-\section{Conclusion}
