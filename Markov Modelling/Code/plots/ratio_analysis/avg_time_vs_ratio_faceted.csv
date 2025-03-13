@@ -1,0 +1,113 @@
+Board Size,Ratio,Entity Fixed,Data Source,Average Game Time
+8.0,0.5,Ns Fixed,Simulation,12.926
+8.0,0.5,Ns Fixed,Markov Model,13.174265527230965
+8.0,1.0,Ns Fixed,Simulation,38.382
+8.0,1.0,Ns Fixed,Markov Model,39.863364932109945
+8.0,1.5,Ns Fixed,Simulation,59.511
+8.0,1.5,Ns Fixed,Markov Model,58.261536270759905
+8.0,2.0,Ns Fixed,Simulation,40.434
+8.0,2.0,Ns Fixed,Markov Model,39.98534582287539
+10.0,0.5,Ns Fixed,Simulation,72.418
+10.0,0.5,Ns Fixed,Markov Model,73.69060178789789
+10.0,1.0,Ns Fixed,Simulation,36.546
+10.0,1.0,Ns Fixed,Markov Model,35.708667769969225
+10.0,1.5,Ns Fixed,Simulation,39.585
+10.0,1.5,Ns Fixed,Markov Model,39.07274879150202
+10.0,2.0,Ns Fixed,Simulation,119.057
+10.0,2.0,Ns Fixed,Markov Model,113.27942325992564
+12.0,0.5,Ns Fixed,Simulation,22.528
+12.0,0.5,Ns Fixed,Markov Model,22.660282992030478
+12.0,1.0,Ns Fixed,Simulation,38.344
+12.0,1.0,Ns Fixed,Markov Model,36.352621733891866
+12.0,1.5,Ns Fixed,Simulation,159.89
+12.0,1.5,Ns Fixed,Markov Model,156.0788217240705
+12.0,2.0,Ns Fixed,Simulation,69.147
+12.0,2.0,Ns Fixed,Markov Model,70.15512874712148
+14.0,0.5,Ns Fixed,Simulation,48.784
+14.0,0.5,Ns Fixed,Markov Model,46.754413047580684
+14.0,1.0,Ns Fixed,Simulation,79.537
+14.0,1.0,Ns Fixed,Markov Model,81.3542322027705
+14.0,1.5,Ns Fixed,Simulation,91.78
+14.0,1.5,Ns Fixed,Markov Model,94.05612903951177
+14.0,2.0,Ns Fixed,Simulation,146.251
+14.0,2.0,Ns Fixed,Markov Model,140.87822784779414
+16.0,0.5,Ns Fixed,Simulation,52.887
+16.0,0.5,Ns Fixed,Markov Model,53.563710150235764
+16.0,1.0,Ns Fixed,Simulation,182.481
+16.0,1.0,Ns Fixed,Markov Model,186.69928094343751
+16.0,1.5,Ns Fixed,Simulation,75.516
+16.0,1.5,Ns Fixed,Markov Model,75.66060644470876
+16.0,2.0,Ns Fixed,Simulation,798.364
+16.0,2.0,Ns Fixed,Markov Model,755.972444869061
+18.0,0.5,Ns Fixed,Simulation,70.918
+18.0,0.5,Ns Fixed,Markov Model,70.8438101116983
+18.0,1.0,Ns Fixed,Simulation,134.25
+18.0,1.0,Ns Fixed,Markov Model,129.04380896895498
+18.0,1.5,Ns Fixed,Simulation,233.35
+18.0,1.5,Ns Fixed,Markov Model,231.15753391283243
+18.0,2.0,Ns Fixed,Simulation,240.501
+18.0,2.0,Ns Fixed,Markov Model,247.3273567062524
+20.0,0.5,Ns Fixed,Simulation,283.807
+20.0,0.5,Ns Fixed,Markov Model,285.7975726119531
+20.0,1.0,Ns Fixed,Simulation,72.798
+20.0,1.0,Ns Fixed,Markov Model,72.88311898532407
+20.0,1.5,Ns Fixed,Simulation,95.702
+20.0,1.5,Ns Fixed,Markov Model,102.87950169941057
+20.0,2.0,Ns Fixed,Simulation,121.116
+20.0,2.0,Ns Fixed,Markov Model,124.38042440618608
+8.0,0.5,Nl Fixed,Simulation,18.386
+8.0,0.5,Nl Fixed,Markov Model,18.521947939350504
+8.0,1.0,Nl Fixed,Simulation,20.679
+8.0,1.0,Nl Fixed,Markov Model,21.141025704251582
+8.0,1.5,Nl Fixed,Simulation,53.489
+8.0,1.5,Nl Fixed,Markov Model,52.59178057487386
+8.0,2.0,Nl Fixed,Simulation,403.209
+8.0,2.0,Nl Fixed,Markov Model,414.9073950377232
+10.0,0.5,Nl Fixed,Simulation,31.161
+10.0,0.5,Nl Fixed,Markov Model,31.41147544880645
+10.0,1.0,Nl Fixed,Simulation,53.876
+10.0,1.0,Nl Fixed,Markov Model,55.017140563115404
+10.0,1.5,Nl Fixed,Simulation,79.089
+10.0,1.5,Nl Fixed,Markov Model,77.81933434270096
+10.0,2.0,Nl Fixed,Simulation,51.106
+10.0,2.0,Nl Fixed,Markov Model,54.624113087333455
+12.0,0.5,Nl Fixed,Simulation,19.647
+12.0,0.5,Nl Fixed,Markov Model,19.747656371624487
+12.0,1.0,Nl Fixed,Simulation,68.478
+12.0,1.0,Nl Fixed,Markov Model,72.91960316469991
+12.0,1.5,Nl Fixed,Simulation,204.153
+12.0,1.5,Nl Fixed,Markov Model,210.6392996796007
+12.0,2.0,Nl Fixed,Simulation,400.594
+12.0,2.0,Nl Fixed,Markov Model,414.7626079876166
+14.0,0.5,Nl Fixed,Simulation,25.771
+14.0,0.5,Nl Fixed,Markov Model,26.151038239841007
+14.0,1.0,Nl Fixed,Simulation,122.627
+14.0,1.0,Nl Fixed,Markov Model,116.83693238084075
+14.0,1.5,Nl Fixed,Simulation,98.56
+14.0,1.5,Nl Fixed,Markov Model,94.14038379416635
+14.0,2.0,Nl Fixed,Simulation,298.685
+14.0,2.0,Nl Fixed,Markov Model,322.6786479561255
+16.0,0.5,Nl Fixed,Simulation,34.013
+16.0,0.5,Nl Fixed,Markov Model,33.8564405413555
+16.0,1.0,Nl Fixed,Simulation,49.71
+16.0,1.0,Nl Fixed,Markov Model,49.85943811628897
+16.0,1.5,Nl Fixed,Simulation,66.148
+16.0,1.5,Nl Fixed,Markov Model,64.80212145720256
+16.0,2.0,Nl Fixed,Simulation,127.023
+16.0,2.0,Nl Fixed,Markov Model,123.68942970071417
+18.0,0.5,Nl Fixed,Simulation,107.675
+18.0,0.5,Nl Fixed,Markov Model,109.21542085623503
+18.0,1.0,Nl Fixed,Simulation,188.282
+18.0,1.0,Nl Fixed,Markov Model,192.56589164006343
+18.0,1.5,Nl Fixed,Simulation,337.233
+18.0,1.5,Nl Fixed,Markov Model,360.882481704803
+18.0,2.0,Nl Fixed,Simulation,167.007
+18.0,2.0,Nl Fixed,Markov Model,166.72050965481512
+20.0,0.5,Nl Fixed,Simulation,46.015
+20.0,0.5,Nl Fixed,Markov Model,46.21636600561159
+20.0,1.0,Nl Fixed,Simulation,51.938
+20.0,1.0,Nl Fixed,Markov Model,51.817208955544714
+20.0,1.5,Nl Fixed,Simulation,63.926
+20.0,1.5,Nl Fixed,Markov Model,62.6221712504349
+20.0,2.0,Nl Fixed,Simulation,182.696
+20.0,2.0,Nl Fixed,Markov Model,189.7957872892569
