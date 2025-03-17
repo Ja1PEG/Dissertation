@@ -1,133 +1,129 @@
-\chapter{Scaling the Game Board: Impact on Game Hardness and Duration}
+\chapter{Scaling the Game Board: Impact on Game Duration}
 
-\section{Introduction: Board Size as a Determinant of Game Hardness}
+\section{Board Size as a Determinant of Game Difficulty}
 
-In the preceding chapter, the influence of snake and ladder \textit{lengths} and the \textit{number} of these entities on the board was systematically examined. It was observed how varying entity lengths, through different distributional approaches, alters the average game time and the overall shape of the game's turn distribution.  Having established the sensitivity of game dynamics to entity lengths, this chapter now turns its attention to another fundamental parameter: the \textit{size} of the game board itself.
+The preceding chapter systematically examined the influence of snake and ladder \textit{lengths} and the \textit{number} of these entities on the board. How varying entity lengths and numbers alter the average game duration was observed. Having established the sensitivity of game dynamics to entity lengths and numbers, this chapter now turns its attention to another fundamental parameter: the \textit{size} of the game board itself.
 
-This chapter investigates how scaling the dimensions of the game board, while maintaining a consistent density of snakes and ladders and keeping their individual lengths fixed, impacts key gameplay metrics.  The primary focus was on understanding how board size influences the \textit{hardness} of the game. In this context, game hardness is operationally defined through two readily quantifiable measures: \textbf{average game time}, representing the typical duration of a play session, and \textbf{probability of winning within a specified number of turns}, reflecting the likelihood of achieving a relatively quick victory.  These metrics provide complementary perspectives on game challenge and player experience, with average game time indicating the overall time investment required and win probability offering insight into the game's pace and potential for swift success.
+This chapter investigates how scaling the dimensions of the game board while maintaining a constant density of snakes and ladders, and then using this notion of density constant while alternating between the $N_s$  and $N_l$, then experimenting with the $\frac{N_s}{N_l}$ ratio, keeping their individual lengths fixed, impacts game duration. The primary focus was on understanding how board size influences the \textit{difficulty} of the game. In this context, game hardness is operationalised through two readily quantifiable measures: average game duration, representing the typical duration of a play session, and probability of winning within a specified number of turns, reflecting the likelihood of achieving a relatively quick victory. These metrics provide complementary perspectives on the game's challenge and player experience, with average game duration indicating the overall time investment required and win probability offering insight into the game's pace and potential for swift success.
 
-By systematically varying the board size and analysing the resulting changes in average game time and win probabilities, this chapter aims to elucidate how board dimensions, in conjunction with fixed entity characteristics, shape the mechanical properties and, by extension, the mechanical enjoyability of Snakes and Ladders.  The hypothesis is that increasing board size, even with constant entity density and lengths, will lead to longer average game times, reflecting the greater distance to traverse to reach the goal. 
-
-
-\section{Methodology: Simulation Setup for Board Size Scaling}
-
-To investigate the impact of board size, a simulation experiment was designed, varying the linear dimension, $n$, of a square Snakes and Ladders board, resulting in board sizes $N = n^2$. The following board sizes were systematically explored: $8 \times 8$ (64 tiles), $10 \times 10$ (100 tiles), $12 \times 12$ (144 tiles), $14 \times 14$ (196 tiles), $16 \times 16$ (256 tiles), $18 \times 18$ (324 tiles), and $20 \times 20$ (400 tiles).  For each board size, a constant density of snakes and ladders was maintained, set at 0.1 entities per tile, meaning the number of snakes and the number of ladders were both calculated as $0.1 \times N$.  Crucially, the individual lengths of all snakes and ladders were also kept \textit{fixed} at 10 tiles, irrespective of board size, to isolate the effect of board dimensions. For each board size configuration, 10,000 game simulations were conducted.
+By systematically varying the board size and analysing the resulting changes in average game duration and win probabilities, this chapter aims to elucidate how board dimensions, in conjunction with fixed entity characteristics, shape the game mechanics and, by extension, the mechanical enjoyment of Snakes and Ladders. We hypothesise that increasing board size, even with constant entity density and lengths, will lead to longer average game durations, reflecting the greater distance to traverse to reach the goal. In the following sections, we test the hypothesis by conducting simulations, keeping the constraints on the board design intact from the prior chapter.
 
 
-\begin{enumerate}
-	\item \textbf{Average Game Time (Simulation):}  The mean number of turns taken across 10,000 simulated games for each board size, providing a measure of typical game duration.
-	\item \textbf{Probability of Winning within N/2 Turns:} Calculated as the proportion of games completed within $N/2$ turns, where $N$ is the board size, representing the probability of a relatively quick win (within half the number of tiles).
-	\item \textbf{Probability of Winning within N/3 Turns:}  Calculated as the proportion of games completed within $N/4$ turns, representing the probability of a swift win (within a third of the number of tiles).
-	\item \textbf{Probability of Winning within N/4 Turns:}  Calculated as the proportion of games completed within $N/4$ turns, representing the probability of a very swift win (within a quarter of the number of tiles).
-\end{enumerate}
+\section{Simulation Setup for Board Size Scaling}
 
-To further explore the interplay between board size and the relative number of snakes and ladders, simulations were conducted across the aforementioned board sizes for varying ratios of snakes to ladders ($N_S/N_L$).  Two sets of simulations were performed:
+To investigate the impact of board size, a simulation experiment was designed, varying the linear dimension, $n$, of a square Snakes and Ladders board, resulting in board sizes $\text{BoardSize} = n^2$. The following board sizes were systematically explored: $8 \times 8$ (64 tiles), $10 \times 10$ (100 tiles), $12 \times 12$ (144 tiles), $14 \times 14$ (196 tiles), $16 \times 16$ (256 tiles), $18 \times 18$ (324 tiles), and $20 \times 20$ (400 tiles).  For each board size, a constant density of snakes and ladders was maintained, set at 0.1 entities per tile, meaning the number of snakes and the number of ladders were both calculated as $0.1 \times \text{BoardSize}$.  Crucially, the individual lengths of all snakes and ladders were also kept \textit{fixed} at 10 tiles, irrespective of board size, to isolate the effect of board dimensions on smaller boards. For each board size configuration, 10,000 game simulations\footnote{The computations were implemented in Python 3.13.2 \autocite{python}} were conducted . Mentioned below are the metrics that were collected from the aforementioned simulations:
 
 \begin{enumerate}
-	\item \textbf{Fixed Snake Density, Varying Ladder Denexperiencesity:} The number of snakes ($N_S$) was fixed at $0.1 \times N$ for each board size $N$. The number of ladders ($N_L$) was then varied to achieve $N_S/N_L$ ratios of 0.5, 1.0, 1.5, and 2.0.
-	\item \textbf{Fixed Ladder Density, Varying Snake Density:} The number of ladders ($N_L$) was fixed at $0.1 \times N$ for each board size $N$. The number of snakes ($N_S$) was varied to achieve $N_S/N_L$ ratios of 0.5, 1.0, 1.5, and 2.0.
+	\item \textbf{Average Game Duration (Simulation):}  The mean number of turns taken across 10,000 simulated games for each board size, providing a measure of typical game duration.
+	\item \textbf{Probability of Winning within $\frac{\text{BoardSize}}{2}$ Turns:} Calculated as the proportion of games completed within $\frac{\text{BoardSize}}{2}$ turns, representing the probability of a relatively quick win (within a half the number of tiles).
+	\item \textbf{Probability of Winning within $\frac{\text{BoardSize}}{3}$ Turns:}  Calculated as the proportion of games completed within $\frac{\text{BoardSize}}{3}$ turns, representing the probability of a swift win (within a third of the number of tiles).
+	\item \textbf{Probability of Winning within $\frac{\text{BoardSize}}{4}$ Turns:}  Calculated as the proportion of games completed within $\frac{\text{BoardSize}}{4}$ turns, representing the probability of a very swift win (within a quarter of the number of tiles).
 \end{enumerate}
 
-These simulations, systematically varying board size and Ns/Nl ratio, aim to provide a comprehensive understanding of how these parameters influence game dynamics, hardness, and duration in Snakes and Ladders.
+\subsection{Keeping $\frac{N_S}{N_L}$ and Density of Snakes and Ladders as 0.1}
 
-\section{Findings: Impact of Board Size on Game Hardness and Duration}
+In order to set up a control study of the effects of varying the board size on the average game duration and the probabilities of achieving a quick win, we keep $\frac{N_s}{N_l} = 1$ and the density of both Snakes and Ladders as 0.1. The following section explores the observations from conducting the simulations.
 
-This section presents a comprehensive analysis of the simulation findings, focusing on how board size and the ratio of snakes to ladders ($N_S/N_L$) impact key indicators of game hardness and duration: the probability of winning within a specified number of turns, and the average game time.  This analysis aims to provide a nuanced understanding of how board size scaling and entity balance shape the perceived player experience in Snakes and Ladders.
+\subsubsection{Findings: Impact of Board Size on Game Duration and Winning Probability}
 
-\subsection{Win Probability vs. Board Size for Varying Ns/Nl Ratios}
+While keeping $\frac{N_s}{N_l} = 1$ and the density of both Snakes and Ladders as 0.1 gives us configurations with an equal, but proportionally growing $N_s$ and $N_l$ on the board. The effects of increasing the board size on average game duration can be seen in Figure \ref{fig:fixedratiofixeddensity}. The findings fall in line with our initial hypothesis which suggested that game duration should increase as the board scales, and we see a near linear relationship between the board size and average duration. Another insight from conducting this simulation suggests that the probability of winning in both $\frac{\text{BoardSize}}{2}$ and $\frac{\text{BoardSize}}{3}$ turns increases as the board size increases. 
 
 \begin{figure}[th]
 	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-0_5"}
-	\caption{Win Probability vs Board Size for Ns/Nl Ratio = 0.5}
+	\includegraphics[width=0.8\linewidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_RatioOne/AvgTurnsVsBoardSize_RatioOne_ns_nl_ratio-1_0"}
+	\caption{\textbf{Average Game Duration against Growing Board Size:} Placing an equal but proportionally growing $N_s$ and $N_l$ on the boards as they scale show that average game duration increases as board size increases}
+	\label{fig:fixedratiofixeddensity}
+\end{figure}
+
+Now, we move towards varying the other parameters systematically to isolate the effects of individual parameters on these metrics.
+
+\subsection{Varying $\frac{N_s}{N_l}$ and Keeping either Density of Snakes or Ladders as 0.1} 
+To further explore the interplay between board size and the relative number of snakes and ladders, simulations were conducted across the aforementioned board sizes for varying ratios of snakes to ladders ($\frac{N_s}{N_l}$). It becomes crucial to vary $\frac{N_s}{N_l}$ while keeping either of the densities fixed to understand the impact having asymmetrical ${N_s}$ and $N_l$ have on the board, it allows us to distinguish whether the over abundance or shortage of any of the two lead to any kind of emergent behaviour. For this two sets of simulations were performed:
+
+\begin{enumerate}
+	\item \textbf{Fixed Snake Density, Varying Ladder Density:} The number of snakes ($N_s$) was fixed at $0.1 \times$BoardSize for each board size. The number of ladders ($N_l$) was then varied to achieve $\frac{N_s}{N_l}$ ratios of 0.5, 1.0, 1.5, and 2.0.
+	\item \textbf{Fixed Ladder Density, Varying Snake Density:} The number of ladders ($N_l$) was fixed at $0.1 \times$BoardSize for each board size. The number of snakes ($N_s$) was varied to achieve $\frac{N_s}{N_l}$ ratios of 0.5, 1.0, 1.5, and 2.0.
+\end{enumerate}
+
+These simulations, systematically varying board size and $\frac{N_s}{N_l}$ ratio, aim to provide a comprehensive understanding of how these parameters influence game dynamics, hardness, and duration in Snakes and Ladders.
+
+\subsubsection{Findings: Impact of Board Size on Game Duration and Winning Probability}
+
+This section presents an analysis of the simulation findings, focusing on how board size and the ratio of snakes to ladders ($\frac{N_s}{N_l}$) impact the probability of winning within a specified number of turns, and the average game duration.  This analysis aims to provide a nuanced understanding of how board size scaling and entity balance may shape the perceived player experience in Snakes and Ladders.
+
+\subsubsection{Win Probability vs. Board Size for Varying Ns/Nl Ratios}
+
+\begin{figure}[th]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-0_5"}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-1_0"}}
+	\linebreak
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-1_5"}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-2_0"}}
+	\caption{\textbf{Win Probability vs Board Size:} For $\frac{N_s}{N_l}\in[0.5 ,2]$}
 	\label{fig:winprob_vs_boardsize_ratio_0_5}
 \end{figure}
 
-\begin{figure}[th]
-	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-1_0"}
-	\caption{Win Probability vs Board Size for Ns/Nl Ratio = 1.0}
-	\label{fig:winprob_vs_boardsize_ratio_1_0}
-\end{figure}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-1_5"}
-	\caption{Win Probability vs Board Size for Ns/Nl Ratio = 1.5}
-	\label{fig:winprob_vs_boardsize_ratio_1_5}
-\end{figure}
+Figure \ref{fig:winprob_vs_boardsize_ratio_0_5} visually represent the relationship between board size and win probability across different $\frac{N_s}{N_l}$ (0.5, 1.0, 1.5, and 2.0, respectively). Each figure distinctly portrays data derived from both fixed snake density and fixed ladder density simulations, facilitating a comparative examination of how these density configurations modulate the observed gameplay dynamics.
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/WinProbVsBoardSize_ByRatio/WinProbVsBoardSize_ByRatio_ns_nl_ratio-2_0"}
-	\caption{Win Probability vs Board Size for Ns/Nl Ratio = 2.0}
-	\label{fig:winprob_vs_boardsize_ratio_2_0}
-\end{figure}
+\noindent\textbf{Overall Trend: Increasing Win Probability with Board Size} A consistent trend, robust across all $\frac{N_s}{N_l}$ ratios and density configurations, is the tendency for the probability of achieving a win within a limited number of turns (specifically, within $\frac{\text{BoardSize}}{2}$ and $\frac{\text{BoardSize}}{4}$ turns) to exhibit an \textit{increase as the board size expands}. This trend robustly confirms the initial hypothesis positing that larger game boards, despite inherently leading to extended average game durations, may counter intuitively enhance the likelihood of a player securing a swift victory.  For instance, examining Figure \ref{fig:winprob_vs_boardsize_ratio_0_5} (b) for a balanced $\frac{N_s}{N_l}$ ratio of 1.0, the probability of winning within $\frac{\text{BoardSize}}{4}$ turns increases from approximately 10\% on an 8x8 board to over 25\% on a 20x20 board in the fixed snake density configuration. This seemingly paradoxical effect can be intuitively explained by the proportionally greater number of pathways and tile options available on larger boards.  The increased tile count provides players with more avenues to circumvent snake encounters and capitalise on ladder climbs, thereby statistically improving the chances of a quicker, luck-favoured game resolution, even when the density of entities remains constant.
 
-
-Figures \ref{fig:winprob_vs_boardsize_ratio_0_5}, \ref{fig:winprob_vs_boardsize_ratio_1_0}, \ref{fig:winprob_vs_boardsize_ratio_1_5}, and \ref{fig:winprob_vs_boardsize_ratio_2_0} visually represent the intricate relationship between board size and win probability across different $N_S/N_L$ ratios (0.5, 1.0, 1.5, and 2.0, respectively). Each figure distinctly portrays data derived from both fixed snake density and fixed ladder density simulations, facilitating a comparative examination of how these density configurations modulate the observed gameplay dynamics.
-
-\textbf{Overall Trend: Increasing Win Probability with Board Size} A consistent trend, robust across all $N_S/N_L$ ratios and density configurations, is the tendency for the probability of achieving a win within a limited number of turns (specifically, within N/2 and N/4 turns) to exhibit an \textit{increase as the board size expands}. This trend robustly confirms the initial hypothesis positing that larger game boards, despite inherently leading to extended average game durations, may counter intuitively enhance the likelihood of a player securing a swift victory.  For instance, examining Figure \ref{fig:winprob_vs_boardsize_ratio_1_0} for a balanced Ns/Nl ratio of 1.0, the probability of winning within N/4 turns increases from approximately 10\% on an 8x8 board to over 25\% on a 20x20 board in the fixed snake density configuration. This seemingly paradoxical effect can be intuitively explained by the proportionally greater number of pathways and tile options available on larger boards.  The increased tile count provides players with more avenues to circumvent snake encounters and capitalise on ladder climbs, thereby statistically improving the chances of a quicker, luck-favoured game resolution, even when the density of entities remains constant.
-
-\textbf{Impact of Ns/Nl Ratio on Win Probability:}  The $N_S/N_L$ ratio emerges as a significant modulator, substantially influencing the baseline win probabilities and the scaling relationship between board size and win likelihood, as detailed in the preceding subsections.
+\noindent\textbf{Impact of $\frac{N_s}{N_l}$ Ratio on Win Probability:}  The $\frac{N_s}{N_l}$ ratio emerges as a significant modulator, substantially influencing the baseline win probabilities and the scaling relationship between board size and win likelihood, as detailed in the preceding subsections.
 
 \begin{itemize}
-	\item \textbf{Low Ns/Nl Ratio (0.5) - High Baseline Win Probability:} Figure \ref{fig:winprob_vs_boardsize_ratio_0_5}, representing a low $N_S/N_L$ ratio indicative of ladder abundance relative to snakes, demonstrates consistently elevated win probabilities across the spectrum of board sizes. Notably, the incremental increase in win probability associated with board size expansion is less pronounced in this configuration. 
-	\item \textbf{Balanced Ns/Nl Ratio (1.0) - Moderate and Scaling Probabilities:} In contrast, Figure \ref{fig:winprob_vs_boardsize_ratio_1_0}, depicting a balanced configuration with an equal number of snakes and ladders, portrays a more graduated and discernible increase in win probability as board size scales. 
-	\item \textbf{Elevated Ns/Nl Ratios (1.5 and 2.0) - Reduced and Fluctuating Probabilities:} Figures \ref{fig:winprob_vs_boardsize_ratio_1_5} and \ref{fig:winprob_vs_boardsize_ratio_2_0}, characterising higher $N_S/N_L$ ratios where snakes outnumber ladders, illustrate a departure from strictly linear scaling patterns and reveal suppressed win probabilities, particularly for swift victories.
-	\item \textbf{Density Configuration - Minor Influence:} Comparative analysis within each figure, contrasting fixed snake density and fixed ladder density lines, reveals that the specific choice between fixing snake or ladder density exerts a comparatively subordinate influence on win probability distributions, with the $N_S/N_L$ ratio being the dominant factor.
+	\item \textbf{Low $\frac{N_s}{N_l}$ Ratio (0.5) - High Baseline Win Probability:} Figure \ref{fig:winprob_vs_boardsize_ratio_0_5}, representing a low $\frac{N_s}{N_l}$ ratio indicative of ladder abundance relative to snakes, demonstrates consistently elevated win probabilities across the spectrum of board sizes. Notably, the incremental increase in win probability associated with board size expansion is less pronounced in this configuration. 
+	\item \textbf{Balanced $\frac{N_S}{N_L}$ Ratio (1.0) - Moderate and Scaling Probabilities:} In contrast, Figure \ref{fig:winprob_vs_boardsize_ratio_0_5} (b), depicting a balanced configuration with an equal number of snakes and ladders, portrays a more graduated and discernible increase in win probability as board size scales. 
+	\item \textbf{Elevated $\frac{N_S}{N_L}$ Ratios (1.5 and 2.0) - Reduced and Fluctuating Probabilities:} Figures \ref{fig:winprob_vs_boardsize_ratio_0_5} (c) and \ref{fig:winprob_vs_boardsize_ratio_0_5} (d), characterising higher $\frac{N_s}{N_l}$ ratios where snakes outnumber ladders, illustrate a departure from strictly linear scaling patterns and reveal suppressed win probabilities, particularly for swift victories.
+	\item \textbf{Density Configuration - Minor Influence:} Comparative analysis within each figure, contrasting fixed snake density and fixed ladder density lines, reveals that the specific choice between fixing snake or ladder density exerts a comparatively subordinate influence on win probability distributions, with the $\frac{N_s}{N_l}$ ratio being the dominant factor.
 \end{itemize}
 
 
-\subsection{Average Game Time vs. Board Size for Varying Ns/Nl Ratios}
+\subsubsection{Average Game Duration vs. Board Size for Varying Ns/Nl Ratios}
 
 \begin{figure}[th]
 	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-0_5"}
-	\caption{Average Game Turns vs Board Size for Ns/Nl Ratio = 0.5}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-0_5"}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-1_0"}}
+	\linebreak
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-1_5"}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-2_0"}}
+	\caption{\textbf{Average Game Turns vs Board Size }for varying $\frac{N_s}{N_l}$ ratios, regardless of which parameter was fixed, the probabilities follow a similar trend across all ratios.}
 	\label{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[th]
 	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-1_0"}
-	\caption{Average Game Turns vs Board Size for Ns/Nl Ratio = 1.0}
-	\label{fig:avgturns_vs_boardsize_ratio_1_0_avg_turns}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/ns"}}
+	\subfloat[]{\includegraphics[width=0.5\textwidth]{"../Chapter 4/Latest/plots_output/nl"}}
+	\linebreak
+	\caption{\textbf{Average Game Turns vs Board Size }for varying $\frac{N_s}{N_l}$ ratios tends to increase as the ratio increases, due to the increased $N_s$ on the board.}
+	\label{fig:avgturns_vs_nsnl_ratio}
 \end{figure}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-1_5"}
-	\caption{Average Game Turns vs Board Size for Ns/Nl Ratio = 1.5}
-	\label{fig:avgturns_vs_boardsize_ratio_1_5_avg_turns}
-\end{figure}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{"../Chapter 4/Latest/plots_output/AvgTurnsVsBoardSize_ByRatio/AvgTurnsVsBoardSize_ByRatio_ns_nl_ratio-2_0"}
-	\caption{Average Game Turns vs Board Size for Ns/Nl Ratio = 2.0}
-	\label{fig:avgturns_vs_boardsize_ratio_2_0_avg_turns}
-\end{figure}
+Complementing the win probability analysis, Figure \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns},  depicts the relationship between board size and average game duration for the same varying $\frac{N_s}{N_l}$ ratios (0.5, 1.0, 1.5, and 2.0).  These figures provide a direct measure of how board dimensions and entity balance influence the typical duration of a \textit{Snakes and Ladders} game.
 
-Complementing the win probability analysis, Figures \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns}, \ref{fig:avgturns_vs_boardsize_ratio_1_0_avg_turns}, \ref{fig:avgturns_vs_boardsize_ratio_1_5_avg_turns}, and \ref{fig:avgturns_vs_boardsize_ratio_2_0_avg_turns} depict the relationship between board size and average game time for the same varying $N_S/N_L$ ratios (0.5, 1.0, 1.5, and 2.0).  These figures provide a direct measure of how board dimensions and entity balance influence the typical duration of a Snakes and Ladders game.
+\subsubsection{Consistent Increase in Average Game Duration with Board Size}  A highly consistent and pronounced trend across all $\frac{N_s}{N_l}$ ratios and density configurations is the increase in average game duration as the board size scales upward. This observation directly validates the initial hypothesis that larger board dimensions, even with constant entity density and lengths, inherently lead to longer gameplay durations. 
 
-\textbf{Consistent Increase in Average Game Time with Board Size:}  A highly consistent and pronounced trend across all $N_S/N_L$ ratios and density configurations is the \textit{unambiguous increase in average game time as the board size scales upwards}. This observation directly validates the initial hypothesis that larger board dimensions, even with constant entity density and lengths, inherently lead to longer gameplay durations. 
-
-\textbf{Influence of Ns/Nl Ratio on Average Game Time Magnitude:} While board size dictates the overall scaling of game time, the $N_S/N_L$ ratio exerts a substantial influence on the \textit{absolute magnitude} of average game times across different board dimensions, as detailed below:
+\subsubsection{Influence of $\frac{N_s}{N_l}$ Ratio on Average Game Duration} While board size dictates the overall scaling of game duration , the $\frac{N_s}{N_l}$ ratio exerts a substantial influence on the \textit{absolute magnitude} of average game durations across different board dimensions, as detailed below:
 
 \begin{itemize}
-	\item \textbf{Low Ns/Nl Ratio (0.5) - Shorter Game Times:} Figure \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns} illustrates that at a low $N_S/N_L$ ratio, average game times are consistently lower across all board sizes compared to higher ratios, indicating quicker game completion due to ladder abundance.
+	\item \textbf{Low $\frac{N_s}{N_l}$ Ratio (0.5) - Shorter Game Duration:} Figure \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns} (a) illustrates that at a low $\frac{N_s}{N_l}$ ratio, average game durations are consistently lower across all board sizes compared to higher ratios, indicating quicker game completion due to ladder abundance. 
 	
-	\item \textbf{Balanced Ns/Nl Ratio (1.0) - Moderate Game Times:} Figure \ref{fig:avgturns_vs_boardsize_ratio_1_0_avg_turns} demonstrates moderately increased average game times compared to the low Ns/Nl ratio scenario, with game times scaling more visibly with board size, offering a conventionally paced gameplay experience.
+	\item \textbf{Balanced $\frac{N_s}{N_l}$ Ratio (1.0) - Moderate Game Durations:} Figure \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns} (b) demonstrates moderately increased average game durations compared to the low $\frac{N_s}{N_l}$ ratio scenario, with game durations scaling more visibly with board size, offering a conventionally paced gameplay experience.
 	
-	\item \textbf{Elevated Ns/Nl Ratios (1.5 and 2.0) - Prolonged Game Times:} Figures \ref{fig:avgturns_vs_boardsize_ratio_1_5_avg_turns} and \ref{fig:avgturns_vs_boardsize_ratio_2_0_avg_turns} reveal a marked elongation of average game times, particularly at higher $N_S/N_L$ ratios, reflecting the impeding effect of a higher density of snakes and leading to protracted gameplay.
-	
-	\item \textbf{Density Configuration - Minimal Impact on Average Game Time Scaling:}  Similar to the win probability analysis, the density configuration (fixed snake vs. fixed ladder density) exhibits a comparatively negligible influence on the scaling of average game times, with the overall game duration primarily governed by board size and the $N_S/N_L$ ratio.
+	\item \textbf{Elevated $\frac{N_s}{N_l}$ Ratios (1.5 and 2.0) - Prolonged Game Durations:} Figures \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns} (c) and \ref{fig:avgturns_vs_boardsize_ratio_0_5_avg_turns} (d) reveal a marked elongation of average game durations, particularly at higher $\frac{N_s}{N_l}$ ratios, reflecting the impeding effect of a higher density of snakes and leading to protracted gameplay.
 \end{itemize}
 
-\textbf{Game Duration and Player Engagement:}  The observed scaling of average game time with board size has direct implications for player engagement and game experience.  The simulations quantitatively demonstrate that board size is a primary lever for controlling the typical time investment required to play Snakes and Ladders. Designers can leverage this predictable scaling to tailor game sessions to different player preferences and contexts. Furthermore, the modulatory effect of the $N_S/N_L$ ratio on average game time offers an additional layer of control over game pacing.
+Similar to the win probability analysis, the density configuration (fixed snake vs. fixed ladder density) exhibits a comparatively negligible influence on the scaling of average game durations, with the overall game duration primarily governed by board size and the $\frac{N_s}{N_l}$ ratio.
+Also, Figure \ref{fig:avgturns_vs_nsnl_ratio} reaffirms our findings from the prior chapter, which suggested an increase in the average duration of games as the $N_s$ on the board increases.
 
-Finally, this chapter lays the groundwork for a more advanced analytical approaches. The observed complexities and probabilistic nature of \textbackslash{}textit\{Snakes and Ladders\} dynamics suggest the utility of Markov models for deeper investigation. As the research moves forward, employing Markov models will allow to gain more nuanced insights into game mechanics, predict expected game durations for specific board configurations, and further quantify the elements that contribute to the overall player experience.
+\section{Game Duration and Player Engagement}  
+The observed scaling of average game duration with board size has direct implications for player engagement and game experience.  The simulations quantitatively demonstrate that board controls the typical time investment required to play Snakes and Ladders. Designers can leverage this predictable scaling to tailor game sessions to different player preferences and contexts. Furthermore, the modulatory effect of the $\frac{N_s}{N_l}$ ratio on average game duration offers an additional layer of control over game pacing to the already predictable impacts that stem from changing BoardSize.
+
+Finally, this chapter lays the groundwork for considering ways in which the game can be modelled, since it can be repeated as a stochastic process. In the next Chapter, we will be modelling the game of \textit{Snakes and Ladders} using a Markov Chain. We hope to gain further insight into analytical approaches as opposed to sticking to empirical observations. 
+
 
 
 

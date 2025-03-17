@@ -91,13 +91,13 @@ def log_final_results(all_results, num_boards, num_snakes, num_ladders, distribu
 
     for distribution, game_times_all_boards in all_results.items():
         for board_index in range(num_boards):
-            # Calculate average game time
+            # Calculate average Game Duration
             avg_game_time = np.mean(game_times_all_boards[board_index])
             final_results.append(
                 {
                     "Distribution": distribution.capitalize(),
                     "Board Number": board_index + 1,
-                    "Average Game Time": avg_game_time,
+                    "Average Game Duration": avg_game_time,
                 }
             )
 
@@ -146,11 +146,11 @@ def log_board_details(all_results, num_boards, num_snakes, num_ladders, distribu
 # Plotting functions
 def plot_board_averages(all_results):
     """
-    Plots the average game time for each board (X-axis: Board Numbers, Y-axis: Average Game Time)
+    Plots the average Game Duration for each board (X-axis: Board Numbers, Y-axis: Average Game Duration)
     for each sampling distribution.
     """
     for distribution, game_times_all_boards in all_results.items():
-        # Calculate the average game time for each board
+        # Calculate the average Game Duration for each board
         board_averages = [np.mean(game_times) for game_times in game_times_all_boards]
         board_numbers = [f"Board {i + 1}" for i in range(len(board_averages))]
 
@@ -165,18 +165,18 @@ def plot_board_averages(all_results):
             plt.text(i, avg + 0.5, f"{avg:.2f}", ha="center", fontsize=9)
 
         # Finalise the plot
-        plt.title(f"Average Game Time for Each Board ({distribution})")
+        plt.title(f"Average Game Duration for Each Board ({distribution})")
         plt.xlabel("Board Number")
-        plt.ylabel("Average Game Time (Moves)")
+        plt.ylabel("Average Game Duration (Moves)")
         plt.xticks(rotation=45)
         plt.tight_layout()
         plt.savefig(f"board_averages_{distribution}.png")
         plt.close()
         
-# Plot full distribution of game times for multiple layouts (separated plots with aggregated overlay)
+# Plot full distribution of Game Durations for multiple layouts (separated plots with aggregated overlay)
 def plot_multiple_distributions(all_results, num_boards_to_plot):
     """
-    Plots the distribution of game times for multiple board layouts,
+    Plots the distribution of Game Durations for multiple board layouts,
     with a separate plot for each sampling distribution.
     Each plot also includes an overlay of the aggregated distribution.
     """
@@ -210,8 +210,8 @@ def plot_multiple_distributions(all_results, num_boards_to_plot):
             linewidth=2,
         )
 
-        plt.title(f"Game Time Distributions for Multiple Layouts ({distribution_names[i]})")
-        plt.xlabel("Game Time (Moves)")
+        plt.title(f"Game Duration Distributions for Multiple Layouts ({distribution_names[i]})")
+        plt.xlabel("Game Duration (Moves)")
         plt.ylabel("Density")
         plt.legend()
         plt.tight_layout()
@@ -221,7 +221,7 @@ def plot_multiple_distributions(all_results, num_boards_to_plot):
 # Plot aggregated distributions for all board layouts (overlayed)
 def plot_aggregated_distributions_overlay(all_results):
     """
-    Plots the aggregated distribution of game times for all board layouts,
+    Plots the aggregated distribution of Game Durations for all board layouts,
     overlaying the distributions for each sampling method on the same plot.
     """
     plt.figure(figsize=(10, 6))
@@ -233,7 +233,7 @@ def plot_aggregated_distributions_overlay(all_results):
     }  # For clearer labels
 
     for distribution, game_times_all_boards in all_results.items():
-        # Flatten the list of game times from all boards into a single list
+        # Flatten the list of Game Durations from all boards into a single list
         all_game_times = [
             game_time
             for game_times_one_board in game_times_all_boards
@@ -248,8 +248,8 @@ def plot_aggregated_distributions_overlay(all_results):
             alpha=0.7,
         )
 
-    plt.title("Aggregated Game Time Distributions (All Layouts)")
-    plt.xlabel("Game Time (Moves)")
+    plt.title("Aggregated Game Duration Distributions (All Layouts)")
+    plt.xlabel("Game Duration (Moves)")
     plt.ylabel("Density")
     plt.legend()
     plt.tight_layout()
@@ -258,11 +258,11 @@ def plot_aggregated_distributions_overlay(all_results):
 
 def plot_comparative_aggregate_averages(all_results):
     """
-    Plots the aggregate average game time for each sampling distribution.
+    Plots the aggregate average game Duration for each sampling distribution.
     X-axis: Sampling Distributions
-    Y-axis: Aggregate Average Game Time
+    Y-axis: Aggregate Average Game Duration
     """
-    # Calculate the overall average game time for each distribution
+    # Calculate the overall average Game Duration for each distribution
     aggregate_averages = {
         distribution: np.mean(
             [np.mean(game_times) for game_times in game_times_all_boards]
@@ -285,16 +285,16 @@ def plot_comparative_aggregate_averages(all_results):
         plt.text(i, avg + 0.5, f"{avg:.2f}", ha="center", fontsize=10)
 
     # Finalise the plot
-    plt.title("Aggregate Average Game Time Across Sampling Distributions")
+    plt.title("Aggregate Average Game Duration Across Sampling Distributions")
     plt.xlabel("Sampling Distribution")
-    plt.ylabel("Aggregate Average Game Time (Moves)")
+    plt.ylabel("Aggregate Average Game Duration (Moves)")
     plt.tight_layout()
     plt.savefig("comparative_aggregate_average_game_times.png")
 
 # Main program logic
 if __name__ == "__main__":
     num_boards = 10
-    num_simulations = 1000
+    num_simulations = 10000
     num_snakes = 10
     num_ladders = 10
     max_length = 40  # Fixed max_length

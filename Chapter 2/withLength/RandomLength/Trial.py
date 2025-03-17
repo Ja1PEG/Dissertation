@@ -80,9 +80,9 @@ def simulate_random_points(num_boards, num_simulations, num_snakes, num_ladders)
     # Add values to the top of the bar plots
     for i, v in enumerate(results):
         plt.text(i, v + 0.5, f"{v:.2f}", ha='center', va='bottom')
-    plt.title("Average Game Time for Random Points (Approach 3)")
+    plt.title("Average Game Duration for Random Points")
     plt.xlabel("Board Number")
-    plt.ylabel("Average Game Time (Moves)")
+    plt.ylabel("Average Game Duration (Turns)")
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig("approach_3_random_points.png")
@@ -90,8 +90,8 @@ def simulate_random_points(num_boards, num_simulations, num_snakes, num_ladders)
         # Plot frequency distribution of game times for the last board
     plt.figure(figsize=(10, 6))
     sns.histplot(game_times, bins=30, kde=True, color='blue')
-    plt.title("Frequency Distribution of Game Times for the Last Board")
-    plt.xlabel("Game Time (Moves)")
+    plt.title("Frequency Distribution of Game Duration for the Last Board")
+    plt.xlabel("Game Duration (Turns)")
     plt.ylabel("Frequency")
     plt.tight_layout()
     plt.savefig("approach_3_game_time_distribution.png")
@@ -99,7 +99,7 @@ def simulate_random_points(num_boards, num_simulations, num_snakes, num_ladders)
 if __name__ == "__main__":
     num_boards = 10
     num_simulations = 1000
-    num_snakes = 5
-    num_ladders = 5
+    num_snakes = 10
+    num_ladders = 10
 
     simulate_random_points(num_boards, num_simulations, num_snakes, num_ladders)

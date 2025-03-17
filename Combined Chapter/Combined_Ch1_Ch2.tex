@@ -4,34 +4,65 @@
 \usepackage[english]{babel}
 
 % Set page size and margins
-\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=1.33in,bottom=1in,left=1.5in,right=1in,marginparwidth=1.75cm]{geometry}
+\linespread{1.5}
+
+
 
 % Import useful packages
 \usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{array}
 \usepackage{graphicx}
-\usepackage[colorlinks=true, allcolors=black]{hyperref}
+\usepackage[colorlinks=true, allcolors=black]{hyperref} % Load hyperref early, but after geometry
 \usepackage{nomencl}
-\usepackage{apacite}
+\usepackage[utf8]{inputenc} % Load inputenc BEFORE biblatex
+\usepackage[style=apa, backend=biber]{biblatex}  % Use biblatex with APA 7 style and Biber
+\addbibresource{refs.bib}  % Specify your .bib file
 \usepackage{etoolbox}
 \usepackage{siunitx}
 \usepackage{listings}
 \usepackage{subcaption}
-\usepackage[utf8]{inputenc}
-\usepackage{hyperref}
+\usepackage{csquotes} % VERY IMPORTANT: Add this for correct quotation handling
+\usepackage{ifthen}  % Ensure ifthen package is loaded if not already
 
-
+\DeclareLanguageMapping{english}{english-apa} % Use APA 7 localisation
 
 \newcommand{\ForcePageZero}{
 	\thispagestyle{empty}
 	\setcounter{page}{0}
 }
 
-\newcommand*{\ppspace}{\addnbthinspace}
-
 \title{Parametrising Play:\\ Exploring Game Dynamics in Snakes and Ladders
-{\Large Symbiosis School for Liberal Arts, Pune}}
+	{\Large Symbiosis School for Liberal Arts, Pune}}
 \author{Jai Bakshi \\ 21060322069}
 \date{March 2025}
+
+\renewcommand\nomgroup[1]{%
+	\item[\bfseries
+	\ifstrequal{#1}{S}{Symbols}{%
+		\ifstrequal{#1}{A}{Abbreviations}{%
+			% Add more groups here if needed
+	}}%
+	]}
+
+% List of Symbols and Abbreviations
+\makenomenclature
+\renewcommand{\nomname}{List of Symbols} % Simplified title as only symbols are listed
+\phantomsection
+
+% NOTE: Following are examples of LaTeX format for nomenclature, delete to insert your own abbreviations
+
+\nomenclature[S]{$BoardSize$}{Total number of tiles on the game board}
+\nomenclature[S]{$L^l_i$}{Length of the $i^{\text{th}}$ ladder}
+\nomenclature[S]{$L^s_i$}{Length of the $i^{\text{th}}$ snake}
+\nomenclature[S]{$N_l$}{Total number of ladders on the board}
+\nomenclature[S]{$N_s$}{Total number of snakes on the board}
+\nomenclature[S]{$\text{Ladder}^{\text{base}}_i$}{Base position of the $i^{\text{th}}$ ladder}
+\nomenclature[S]{$\text{Ladder}^{\text{top}}_i$}{Top position of the $i^{\text{th}}$ ladder}
+\nomenclature[S]{$\text{Snake}^{\text{head}}_i$}{Head position of the $i^{\text{th}}$ snake}
+\nomenclature[S]{$\text{Snake}^{\text{tail}}_i$}{Tail position of the $i^{\text{th}}$ snake}
+
 
 \begin{document}
 	\include{OtherPages/TitlePage}
@@ -41,7 +72,6 @@
 	
 	\tableofcontents
 	\addtocontents{toc}{\vspace{-2\baselineskip}}
-
 	
 	\ForcePageZero
 	\clearpage
@@ -51,6 +81,7 @@
 	\include{OtherPages/acknowledgements}
 	
 	\include{OtherPages/abstract}
+	\listoffigures
 	
 	\ForcePageZero
 	\pagenumbering{arabic}
@@ -60,9 +91,12 @@
 	\include{Chapter2.tex}
 	\include{Chapter3.tex}
 	\include{Chapter4.tex}
-	\include{Chapter5.tex}	
+	\include{Chapter5.tex}
 	
+	\clearpage 
+	\printnomenclature
+	\clearpage
 	
-	\bibliographystyle{apacite}
-	\bibliography{refs}
+	\printbibliography
+	
 \end{document}
